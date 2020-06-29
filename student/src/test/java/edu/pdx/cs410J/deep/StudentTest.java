@@ -33,5 +33,11 @@ public class StudentTest
     assertThat(pat.toString(), containsString(name));
   }
 
+  @Test
+  public void toStringContainGpa(){
+    double gpa = 3.76;
+    Student pat = new Student("Pat", new ArrayList<>(), gpa, "Doesn't matter");
+    assertThat(pat.toString(), containsString("has a GPA of " + gpa));
+  }
 
 }
