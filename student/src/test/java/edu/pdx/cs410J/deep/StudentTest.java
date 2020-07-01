@@ -26,6 +26,8 @@ public class StudentTest
     assertThat(pat.getName(), equalTo(name));
   }
 
+
+
   @Test
   public void toStringContainsStudentName(){
     String name= "Pat";
@@ -39,5 +41,8 @@ public class StudentTest
     Student pat = new Student("Pat", new ArrayList<>(), gpa, "Doesn't matter");
     assertThat(pat.toString(), containsString("has a GPA of " + gpa));
   }
+
+
+
 
 }
