@@ -3,6 +3,12 @@ package edu.pdx.cs410J.deep;
 import edu.pdx.cs410J.AbstractPhoneCall;
 
 public class PhoneCall extends AbstractPhoneCall {
+  private final String callee;
+
+  public PhoneCall(String callee) {
+    this.callee = callee;
+  }
+
   @Override
   public String getCaller() {
     throw new UnsupportedOperationException("This method is not implemented yet");
@@ -10,7 +16,7 @@ public class PhoneCall extends AbstractPhoneCall {
 
   @Override
   public String getCallee() {
-    return "This method is not implemented yet";
+    return this.callee;
   }
 
   @Override
