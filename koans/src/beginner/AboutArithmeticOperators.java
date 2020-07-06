@@ -9,8 +9,8 @@ public class AboutArithmeticOperators {
 
     @Koan
     public void simpleOperations() {
-        assertEquals(1, __);
-        assertEquals(1 + 1, __);
+        assertEquals(1, 1);
+        assertEquals(1 + 1, 2);
         assertEquals(2 + 3 * 4, __);
         assertEquals((2 + 3) * 4, __);
         assertEquals(2 * 3 + 4, __);
