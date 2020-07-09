@@ -7,10 +7,13 @@ package edu.pdx.cs410J.deep;
  * class (and its tests).
  */
 public class Kata {
-                                                                                    
 
-  public static void main(String[] args) {
+    public static void main(String[] args) {
     System.err.println("Missing command line arguments");
     System.exit(1);
   }
+
+    public static Object romanNumeral(int number) {
+        return null;
+    }
 }
