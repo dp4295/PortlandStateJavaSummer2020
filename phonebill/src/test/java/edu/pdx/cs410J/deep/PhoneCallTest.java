@@ -26,66 +26,83 @@ public class PhoneCallTest {
   @Test
   public void initiallyAllPhoneCallsHaveTheSameCallee() {
     String callee = "Callee";
-    PhoneCall call = new PhoneCall( callee, "deep", "6/7/2020 10:21", "6/7/2020 10:30");
+    PhoneCall call = new PhoneCall(callee, "deep", "6/7/2020 10:21", "6/7/2020 10:30");
     assertThat(call.getCallee(), equalTo(callee));
   }
 
   @Test
   public void forProject1ItIsOkayIfGetStartTimeReturnsNull() {
 
-    PhoneCall call = new PhoneCall( "deep", "unknown", null, "6/7/2020 10:30");
+    PhoneCall call = new PhoneCall("deep", "unknown", null, "6/7/2020 10:30");
     assertThat(call.getStartTime(), is(nullValue()));
   }
 
   @Test
-  public void calleeIsNotNumber(){
+  public void calleeIsNotNumber() {
     String callee = "123-45-678a";
-    PhoneCall call = new PhoneCall( callee, "deep", "6/7/2020 10:21", "6/7/2020 10:30");
-    for(String str: call.getCallee().split("-")[1].split("-"))
-    {
+    PhoneCall call = new PhoneCall(callee, "deep", "6/7/2020 10:21", "6/7/2020 10:30");
+    for (String str : call.getCallee().split("-")[1].split("-")) {
       Integer.parseInt(str);
     }
   }
 
 
   @Test
-  public void forProject1ItIsOkayIfGetEndTimeReturnsNull(){
-    PhoneCall call = new PhoneCall( "deep", "unknown", "6/7/2020 10:30", null);
+  public void forProject1ItIsOkayIfGetEndTimeReturnsNull() {
+    PhoneCall call = new PhoneCall("deep", "unknown", "6/7/2020 10:30", null);
     assertThat(call.getEndTimeString(), is(nullValue()));
 
   }
 
   @Test
-  public void StartTimeEndTimeIsNotSame()
-  {
-    PhoneCall call = new PhoneCall( null, null, "6/7/2020 10:21", "6/7/2020 10:21");
+  public void StartTimeEndTimeIsNotSame() {
+    PhoneCall call = new PhoneCall(null, null, "6/7/2020 10:21", "6/7/2020 10:21");
     assertThat(call.getEndTimeString(), equalTo(call.getStartTimeString()));
   }
 
   @Test
-  public void validInvalidDateAndTime(String[] args){
+  public void validInvalidDateAndTime() {
 
-//    String date = "01/15/2020";
-//    String  time= "11:39";
+//    String start = args[4];
+//    String start_time = args[5];
+//    String end = args[6];
+//    String end_time = args[7];
 
+    String start = "01/15/2020";
+    String start_time = "11:39";
+    String end = "02/20/2020";
+    String end_time = "11:39";
 
-
-    String start = args[4];
-    String time = args[]
-
-    if(Pattern.matches("[0-9]{2}/[0-90-9]{2}/[0-90-90-90-9]{4}", date))
+    if(Pattern.matches("[0-9]{2}/[0-90-9]{2}/[0-90-90-90-9]{4}", start))
     {
-      if(!(Pattern.matches("[0-90-9]{2}:[0-90-9]{2}", time)))
+      if(!(Pattern.matches("[0-90-9]{2}:[0-90-9]{2}", start_time)))
       {
-        System.out.println("Valid date but invalid time");
+        System.out.println("Valid start date but invalid start time E.g: 2/04/2020 12:34");
       }
       else {
-      //  System.out.println("Valid date and time");
+        //  System.out.println("Valid date and time");
       }
-    }else{
-      System.out.println("Invalid date");
     }
-  }
+    else {
+      System.out.println("Invalid start date E.g 2/04/2020");
+    }
+
+
+    if(Pattern.matches("[0-9]{2}/[0-90-9]{2}/[0-90-90-90-9]{4}", end))
+    {
+      if(!(Pattern.matches("[0-90-9]{2}:[0-90-9]{2}", end_time)))
+      {
+        System.out.println("Valid end date but invalid end time E.g: 2/04/2020 12:34");
+      }
+      else {
+        //  System.out.println("Valid date and time");
+      }
+    }
+    else {
+      System.out.println("Invalid end date E.g 2/04/2020");
+    }
+
+}
 
 
   @Test
