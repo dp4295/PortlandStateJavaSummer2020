@@ -63,11 +63,6 @@ public class PhoneCallTest {
   @Test
   public void validInvalidDateAndTime() {
 
-//    String start = args[4];
-//    String start_time = args[5];
-//    String end = args[6];
-//    String end_time = args[7];
-
     String start = "01/15/2020";
     String start_time = "11:39";
     String end = "02/20/2020";

@@ -30,6 +30,22 @@ public class Project1 {
           line = reader.readLine();
         }
       }
+      else if(args[0].equals("-print")){
+
+        // Create a new phone call object
+        PhoneCall call = new PhoneCall("555-555-5555", "666-666-6666", "6/7/2020", "12:00", "6/7/2020", "12:30");
+
+        // Create a bill object
+        PhoneBill mybill = new PhoneBill("Deep Patel");
+
+        // Add call record to bill object
+        mybill.addPhoneCall(call);
+
+        // Invoke mybill's display
+        mybill.display();
+
+
+      }
 
 
       System.exit(1);
@@ -90,11 +106,26 @@ public class Project1 {
         String enddate = args[6];
         String endtime = args[7];
 
+        // Create a new phone call record
         PhoneCall call = new PhoneCall(callernumber, calleenumber, startdate, starttime, enddate, endtime);
-        call.toString();
+
+        // Create a bill object
         PhoneBill mybill = new PhoneBill(customer);
+
+        // Add call record to bill object
         mybill.addPhoneCall(call);
-        // mybill.toString();
+
+        // Create a new phone call object
+        PhoneCall call2 = new PhoneCall("555-555-5555", "666-666-6666", "6/7/2020", "12:00", "6/7/2020", "12:30");
+
+        // Add call to bill object
+        mybill.addPhoneCall(call2);
+
+        // Invoke mybill's display
+         mybill.display();
+
+
+
       }else{
         System.out.println("Missing -print option");
         System.exit(1);
@@ -107,10 +138,11 @@ public class Project1 {
       System.exit(1);
     }
 
-    for (String arg : args) {
-      System.out.println(arg);
-    }
-    System.exit(1);
+//    for (String arg : args) {
+//      System.out.println(arg);
+//    }
+//    System.exit(1);
+
   }
 
 }

@@ -33,23 +33,31 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
 
     @Override
     public Collection<PhoneCall> getPhoneCalls() {
-        return null;
+        return callcollection;
     }
 
 
-//    public void addCall(AbstractPhoneCall callcollection) {
-//        callcollection.add((PhoneCall) callcollection);
-//      }
-
-      public void setCustomer(String customer)
-      {
+    /**
+     *  Setter function customer
+     */
+    public void setCustomer(String customer)
+    {
           this.customer = customer;
-      }
+    }
 
 
-//    @Override
-//    public List<PhoneCall> getPhoneCalls() {
-//        return callcollection;
-//    }
+    /**
+     *  Display function will display all call records
+     */
+    public void display()
+    {
+        System.out.println();
+        System.out.println("Phone Bill");
+        System.out.println("_________________________________");
+        System.out.println(toString());
+        System.out.println(getPhoneCalls().toString());
+    }
+
+
 
 }
