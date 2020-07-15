@@ -30,20 +30,20 @@ public class Project1IT extends InvokeMainTestCase {
   }
 
 
-//    @Test
-//    public void oneComandlineArgument(){
-//        MainMethodResult result = invokeMain("-README");
-//        assertThat(result.getExitCode(),equalTo(1));
-//        assertThat(result.getTextWrittenToStandardOut(),containsString("Missing customer name, caller number, callee number, start date, start time, end date and end time"));
-//    }
-//
-//
-//    @Test
-//    public void nineCommandlineArgument(){
-//        MainMethodResult result = invokeMain("-print", "Deep", "123-123-1234", "123-123-1111", "1/7/2020", "12:34", "1/7/2020", "12:45", "Extra");
-//        assertThat(result.getExitCode(), equalTo(1));
-//        assertThat(result.getTextWrittenToStandardOut(), containsString("Extra argument"));
-//    }
+    @Test
+    public void oneComandlineArgument(){
+        MainMethodResult result = invokeMain("-README");
+        assertThat(result.getExitCode(),equalTo(1));
+        assertThat(result.getTextWrittenToStandardOut(),containsString("Missing customer name, caller number, callee number, start date, start time, end date and end time"));
+    }
+
+
+    @Test
+    public void nineCommandlineArgument(){
+        MainMethodResult result = invokeMain("-print", "Deep", "123-123-1234", "123-123-1111", "1/7/2020", "12:34", "1/7/2020", "12:45", "Extra");
+        assertThat(result.getExitCode(), equalTo(1));
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Extra argument"));
+    }
 
 
 

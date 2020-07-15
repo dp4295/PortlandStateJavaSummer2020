@@ -58,35 +58,35 @@ public class Project1Test extends InvokeMainTestCase {
     public void twoCommnadlineArgument(){
         MainMethodResult result = invokeMain("-README", "Deep");
         assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardOut(),containsString("Missing caller number, callee number, start date, start time, end date and end time"));
+        assertThat(result.getTextWrittenToStandardOut(),containsString("Invalid command line arguments"));
   }
 
   @Test
     public void threeCommandlineArgument(){
         MainMethodResult result = invokeMain("-print", "Deep", "123-123-1234");
         assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardOut(), containsString("Missing callee number, start date, start time, end date and end time"));
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Invalid command line arguments"));
   }
 
   @Test
     public void fourCommandlineArgument(){
         MainMethodResult result = invokeMain("-print", "Deep", "123-123-1234", "123-123-1111");
         assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardOut(), containsString("Missing start date, start time, end date and end time"));
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Invalid command line arguments"));
     }
 
     @Test
         public void fiveCommandlineArgument(){
         MainMethodResult result = invokeMain("-print", "Deep", "123-123-1234", "123-123-1111", "7/12/2020");
         assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardOut(), containsString("Missing start time, end date and end time"));
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Invalid command line arguments"));
     }
 
     @Test
         public void sixCommandlineArgument(){
         MainMethodResult result = invokeMain("-print", "Deep", "123-123-1234", "123-123-1111", "7/12/2020", "12:00");
         assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardOut(), containsString("Missing end date and end time"));
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Invalid command line arguments"));
 
 
     }
@@ -96,7 +96,7 @@ public class Project1Test extends InvokeMainTestCase {
     public void sevenCommandlineArgument(){
         MainMethodResult result = invokeMain("-print", "Deep", "123-123-1234", "123-123-1111", "7/12/2020", "12:00", "7/12/2020");
         assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardOut(), containsString("Missing end time"));
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Invalid arguments.It should not have any -print, -README or -textFile"));
     }
 
 

@@ -11,12 +11,8 @@ import java.util.regex.Pattern;
 public class CheckDateAndTimeValidity {
 
 
-    public void validInvalidDateAndTime(String [] args) {
+    public void validInvalidDateAndTime(String start, String start_time, String end, String end_time) {
 
-    String start = args[4];
-    String start_time = args[5];
-    String end = args[6];
-    String end_time = args[7];
 
 //        String start = "01/15/2020";
 //        String start_time = "11:39";
