@@ -12,24 +12,24 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import edu.pdx.cs410J.InvokeMainTestCase;
 
 /**
- * A unit test for code in the <code>Project1</code> class.  This is different
+ * A unit test for code in the <code>Project2</code> class.  This is different
  * from <code>Project1IT</code> which is an integration test (and can handle the calls
  * to {@link System#exit(int)} and the like.
  */
-public class Project1Test extends InvokeMainTestCase {
+public class Project2Test extends InvokeMainTestCase {
 
     /**
-     * Invokes the main method of {@link Project1} with the given arguments.
+     * Invokes the main method of {@link Project2} with the given arguments.
      */
     private InvokeMainTestCase.MainMethodResult invokeMain(String... args) {
-        return invokeMain(Project1.class, args );
+        return invokeMain(Project2.class, args );
     }
 
 
   @Test
   public void readmeCanBeReadAsResource() throws IOException {
     try (
-      InputStream readme = Project1.class.getResourceAsStream("README.txt");
+      InputStream readme = Project2.class.getResourceAsStream("README.txt");
     ) {
       assertThat(readme, not(nullValue()));
       BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
