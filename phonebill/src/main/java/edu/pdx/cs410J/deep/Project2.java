@@ -17,8 +17,9 @@ public class Project2 {
       System.out.println("Missing customer name, caller number, callee number, start date, start time, end date and end time");
 
       // valid options are -README , -print , -textFile only
-      OptionValidity optionresult = new OptionValidity();
-      if((optionresult.validInvalidOption(args))==true){
+
+      ArgumentValidationCheck validationCheck = new ArgumentValidationCheck();
+      if((validationCheck.validInvalidOption(args))==true){
         System.out.println("Valid options are only -README , - print , -textFile");
         System.exit(1);
       }
@@ -43,19 +44,18 @@ public class Project2 {
     } else if(args.length == 7) {
 
       // If passing argument length is 7 then args[0] should not be any option
-      OptionValidity optionresult1 = new OptionValidity();
-      if ((optionresult1.validInvalidOption(args)) == false) {
+      ArgumentValidationCheck validationCheck = new ArgumentValidationCheck();
+      if ((validationCheck.validInvalidOption(args)) == false) {
 
         // this is valid case. option is missing but PhoneCall can be added to PhoneBill
 
 
         // Validate Date and Time
-        CheckDateAndTimeValidity  date_time = new CheckDateAndTimeValidity();
-        date_time.validInvalidDateAndTime(args[3], args[4], args[5], args[6]);
+        ArgumentValidationCheck validationcheck = new ArgumentValidationCheck();
+        validationcheck.validInvalidDateAndTime(args[3], args[4], args[5], args[6]);
 
         // validate phone number
-        CheckNumberValidity number = new CheckNumberValidity();
-        number.validInvalidPhoneNumber(args[1],args[2]);
+        validationcheck.validInvalidPhoneNumber(args[1],args[2]);
 
         // Create a new phone call record
         PhoneCall call = new PhoneCall(args[1], args[2], args[3], args[4], args[5], args[6]);
@@ -89,11 +89,10 @@ public class Project2 {
           String enddate = args[6];
           String endtime = args[7];
 
-          CheckDateAndTimeValidity result = new CheckDateAndTimeValidity();
-          result.validInvalidDateAndTime(startdate, starttime, enddate, endtime);
 
-          CheckNumberValidity validnumber = new CheckNumberValidity();
-          validnumber.validInvalidPhoneNumber(callernumber, calleenumber);
+          ArgumentValidationCheck validationcheck  = new ArgumentValidationCheck();
+          validationcheck.validInvalidDateAndTime(startdate, starttime, enddate, endtime);
+          validationcheck.validInvalidPhoneNumber(callernumber, calleenumber);
 
           // Create a new phone call record
           PhoneCall call = new PhoneCall(callernumber, calleenumber, startdate, starttime, enddate, endtime);
@@ -120,15 +119,56 @@ public class Project2 {
 
 
 
-      } else if (args.length >= 9) {
+      } else if (args.length == 9) {
+      System.out.println("Congradulation, You meet MAXIMUM require arguments.") ;
+
+
+      // Check if path first argument is -textFile
+      if(args[0].equals("-textFile")){
+
+        // ArgumentValidationCheck class contain methods to argument validation
+        ArgumentValidationCheck validationobj = new ArgumentValidationCheck();
+        validationobj.isPathCorrect(args[1]);
+
+
+
+
+
+        // Create a new phone call record
+        PhoneCall call = new PhoneCall(args[3], args[4], args[5], args[6], args[7], args[8]);
+
+        // Create a bill object
+
+        PhoneBill mybill = new PhoneBill(args[2]);
+        mybill.addPhoneCall(call);
+       mybill.display();
+
+
+       //mybill.CreateFile();
+
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      System.exit(1);
+      }
+
+       else if (args.length >= 10) {
         System.out.println("Extra arguments");
         System.exit(1);
       }
-
-//       else if (args.length >= 10) {
-//        System.out.println("Extra arguments");
-//        System.exit(1);
-//      }
 
 
 //    for (String arg : args) {

@@ -47,9 +47,17 @@ public class Project2IT extends InvokeMainTestCase {
 
     @Test
     public void nineCommandlineArgument(){
-        MainMethodResult result = invokeMain("-print", "Deep", "123-123-1234", "123-123-1111", "1/7/2020", "12:34", "1/7/2020", "12:45", "Extra");
+        MainMethodResult result = invokeMain("-textFile", "path" , "Deep", "123-123-1234", "123-123-1111", "1/7/2020", "12:34", "1/7/2020", "12:45");
         assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardOut(), containsString("Extra argument"));
+        assertThat(result.getTextWrittenToStandardOut(), containsString("You meet MAXIMUM argument require"));
+    }
+
+
+    @Test
+    public void tenCommnadlineArgument(){
+        MainMethodResult result = invokeMain("-textFile","path", "Deep", "123-123-123", "123-123-1234","1/7/2020", "1:23", "1/7/2020", "1:30", "Extra");
+        assertThat(result.getExitCode(), equalTo(1));
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Extra arguments"));
     }
 
 

@@ -1,5 +1,6 @@
 package edu.pdx.cs410J.deep;
 
+import com.sun.tools.javac.Main;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -100,12 +101,31 @@ public class Project2Test extends InvokeMainTestCase {
     }
 
 
+    @Test
+    public void nineCommandlineArgument(){
+        MainMethodResult result = invokeMain("-textFile", "path" , "Deep", "123-123-1234", "123-123-1111", "1/7/2020", "12:34", "1/7/2020", "12:45");
+        assertThat(result.getExitCode(), equalTo(1));
+        assertThat(result.getTextWrittenToStandardOut(), containsString("You meet MAXIMUM argument require"));
+    }
+
 
     @Test
-     public void nineCommandlineArgument(){
-        MainMethodResult result = invokeMain("-print", "Deep", "123-123-1234", "123-123-1111", "1/7/2020", "12:34", "1/7/2020", "12:45", "Extra");
+    public void tenCommnadlineArgument(){
+        MainMethodResult result = invokeMain("-textFile","path", "Deep", "123-123-123", "123-123-1234","1/7/2020", "1:23", "1/7/2020", "1:30", "Extra");
         assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardOut(), containsString("Extra argument"));
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Extra arguments"));
+    }
+
+    @Test
+    public void writingToNewfile(){
+        MainMethodResult result = invokeMain("-textFile", "src/main/resources/edu/pdx/cs410J/deep/file.txt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "1/7/2020", "10:41");
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Write out into file successfully"));
+    }
+
+    @Test
+    public void invalidPathTest(){
+        MainMethodResult result = invokeMain("-textFile", "src/main/resources/edu/cs410J/deep/file.txt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "1/7/2020", "10:41");
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Invalid path location. Valid file name must follow by src/main/resources/edu/pdx/cs410J/deep/"));
     }
 
 
