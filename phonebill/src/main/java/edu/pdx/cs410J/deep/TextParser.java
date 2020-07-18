@@ -56,16 +56,13 @@ public class TextParser implements PhoneBillParser {
 
 
                 String customername = breaks[0];
-
-                System.out.println(userinput);
-                System.out.println(customername);
-
-                if(customername !=  userinput)
-                {
-                    bufferedreader.close();
-                    System.out.println("Customer given in command line is different than the one found in the text file");
-                    System.exit(1);
-                }
+//
+//                if(customername !=  userinput)
+//                {
+//                    bufferedreader.close();
+//                    System.out.println("Customer given in command line is different than the one found in the text file");
+//                    System.exit(1);
+//                }
 
                 String callernumber = breaks[1];
                 String calleenumber = breaks[2];
@@ -78,22 +75,11 @@ public class TextParser implements PhoneBillParser {
                String enddate = enddatesplit[0];
                String endtime = enddatesplit[1];
 
-//               System.out.println(calleenumber);
-//               System.out.println(callernumber);
-//               System.out.println(startdate);
-//               System.out.println(starttime);
-//               System.out.println(enddate);
-//               System.out.println(endtime);
-
-
-               PhoneCall call = new PhoneCall(callernumber, calleenumber,startdate, starttime, enddate, endtime);
-
-                phonebill.addPhoneCall(call);
-                phonebill.DisplayFromFile();
-
             }
 
             bufferedreader.close();
+            phonebill.DisplayFromFile();
+
             return phonebill;
 
         } catch (FileNotFoundException e) {

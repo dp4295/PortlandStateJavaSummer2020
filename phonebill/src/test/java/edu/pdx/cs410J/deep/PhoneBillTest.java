@@ -37,7 +37,6 @@ public class PhoneBillTest {
         Boolean result = m.find();
         assertThat(phonebill.getCustomer(), result);
 
-
     }
 
 }

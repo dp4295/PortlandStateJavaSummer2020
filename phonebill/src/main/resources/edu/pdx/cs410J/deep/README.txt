@@ -27,5 +27,22 @@ start time   : 24:00
 end time     : mm/dd/yyyy or m/d/yyyy or mm/d/yyyy or m/dd/yyyy
 end time     : 24:00
 
-+
+
++ Valid Command line arguments +
+
+1 argument
+-README
+Above argument display readme.txt file
+
+7 argument
+"Deep Patel" 123-123-1234 123-123-1234 1/7/2020 10:39  1/7/2020 10:41
+Above argument only add record to PhoneBill object. It will not display PhoneBill object
+
+8 argument
+-print "Deep Patel" 123-123-1234 123-123-1234 1/7/2020 10:39  1/7/2020 10:41
+This add phonebill and display the phonebill record
+
+9 arguments
+-textFile "src/main/resources/edu/pdx/cs410J/deep/file.txt" "Deep Patel" 123-123-1234 123-123-1234 1/7/2020 10:39  1/7/2020 10:41
+Above command write to file and read from file
 

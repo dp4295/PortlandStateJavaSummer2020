@@ -75,7 +75,7 @@ public class Project2 {
         // Add call record to bill object
         mybill.addPhoneCall(call);
 
-        mybill.display();
+    //     mybill.display();
       } else {
         System.out.println("Invalid arguments.It should not have any -print, -README or -textFile");
         System.exit(1);
@@ -138,18 +138,25 @@ public class Project2 {
         // ArgumentValidationCheck class contain methods to argument validation
         ArgumentValidationCheck validationobj = new ArgumentValidationCheck();
         if (validationobj.isPathCorrect(args[1])) {
-          //parse the file name from path
-          String path = args[1];
+
+          String path = args[1]; // saving path into local variable
 
           // Split the entire string with "/" token
           String breaks[] = path.split("/");
           String filename = breaks[7];
 
+
+          // Check validation for all command line arguments
+          ArgumentValidationCheck validationcheck  = new ArgumentValidationCheck();
+          validationcheck.validInvalidDateAndTime(args[5], args[6], args[7], args[8]);
+          validationcheck.validInvalidPhoneNumber(args[3], args[4]);
+
+
+
           // Create a new phone call record
           PhoneCall call = new PhoneCall(args[3], args[4], args[5], args[6], args[7], args[8]);
 
           // Create a bill object
-
           PhoneBill mybill = new PhoneBill(args[2]);
           mybill.addPhoneCall(call);
 
@@ -161,53 +168,39 @@ public class Project2 {
           mybill.addPhoneCall(call2);
           // ----> Added second call to call object <----
 
-
+          // Display mybill
           mybill.display();
 
-          // before creating a file make sure to valid isPathCorrect and parse file name
+          // before creating a file make sure to valid isPathCorrect and parse file name we already did it earlier
           mybill.CreateFile(filename);
 
+          // Here the first argument is path and second argument is PhoneBill object
           mybill.WriteToFile(args[1], mybill);
 
+
+
+          // Create a newline in output
+          for(int i=0; i<=3; ++i)
+          {
+            System.out.println();
+          }
+
+            System.out.println("Read from file");
+            System.out.println("_______________");
+            // READING FROM FILE
+            TextParser textparser = new TextParser(args[1], mybill,args[2]);
+            System.out.println(textparser.parse());
         }
       }
 
 
-          // --> Reading from file <----
-          // Do you want to read from file
-    System.out.println();
-    System.out.println("Do you want read from file. Press 1 for yes or 2 for No");
-    String option;
-    do{
-      System.out.print("Input 1 or 2: ");
-      option = in.nextLine();
-
-
-      if(option.equals("1")) {
-
-//         String File;
-//         String path = "src/main/resources/edu/pdx/cs410J/deep/file.txt";
-        String customername;
-        System.out.println("Full customer name: e.g valid name: Deep Patel");
-        customername = in.nextLine();
-
-        PhoneBill bill = new PhoneBill(null);
-        TextParser textparser = new TextParser("src/main/resources/edu/pdx/cs410J/deep/file.txt", bill,customername);
-        System.out.println(textparser.parse());
+//     // --> Reading from file <----
 
 
 
-      }else if(option.equals("2")){
-        System.out.println("Exit the program");
-        System.exit(0);
-      }
+//    // ----> End of reading from file <---
 
-    } while(!(Pattern.matches("[1-2]", option)));
-    // ----> End of reading from file <---
-
-    }
-
-       else if (args.length >= 10) {
+    } else if (args.length >= 10) {
         System.out.println("Extra arguments");
         System.exit(1);
       }
