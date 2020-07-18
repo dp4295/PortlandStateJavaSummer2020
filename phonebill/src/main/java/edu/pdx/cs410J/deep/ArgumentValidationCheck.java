@@ -100,16 +100,19 @@ public class ArgumentValidationCheck {
      *  This method check for valid path
      * @return valid or invalid message
      */
-    public void isPathCorrect(String path)
-    {
-        if(path.startsWith("src/main/resources/edu/pdx/cs410J/deep/")){
-//            System.out.println("valid");
-//            System.exit(0);
+    public boolean isPathCorrect(String path) {
+        if(path.startsWith("src/main/resources/edu/pdx/cs410J/deep/") && path.endsWith(".txt")){
+            System.out.println("File created");
+            return true;
         }else{
-            System.out.println("Invalid path location. Valid file name must follow by src/main/resources/edu/pdx/cs410J/deep/");
-            System.exit(1);
+            System.out.println("Something is wrong, can not create file this time. Check the path");
+            return false;
         }
+
     }
+
+
+
 
 
 

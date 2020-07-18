@@ -3,7 +3,7 @@ package edu.pdx.cs410J.deep;
 import edu.pdx.cs410J.AbstractPhoneCall;
 
 
-public class PhoneCall extends AbstractPhoneCall {
+public class PhoneCall extends AbstractPhoneCall{
 
 
   private String callee;
@@ -93,7 +93,14 @@ public class PhoneCall extends AbstractPhoneCall {
     return end_date_time;
   }
 
+  /**
+   *
+   * @return String with Caller number, Callee number, Start time and end time
+   */
+  public String getPhoneCallToWrite() {
 
+    return getCaller() + "," + getCallee() + "," + getStartTimeString() + "," + getEndTimeString();
+  }
 
 
 }

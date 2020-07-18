@@ -35,7 +35,7 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
     }
 
     @Override
-    public Collection<PhoneCall> getPhoneCalls() {
+    public List<PhoneCall> getPhoneCalls() {
         return callcollection;
     }
 
@@ -71,13 +71,26 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
           try{
               FileWriter write = new FileWriter(filelocation);
 
-              System.out.println("Write out into file successfully");
+//              System.out.println("Write out into file successfully");
+
+              TextDumper obj = new TextDumper(filelocation);
+              obj.dump(writeobj);
+
+
           } catch (IOException e) {
               System.out.println("Unable to write out");
               e.printStackTrace();
           }
       }
 
+
+    /**
+     * This method is used to parse the date from text file <code>ReadFromFile</code>
+     */
+     public void ReadFromFile(String customename)
+     {
+
+     }
 
 
     /**
@@ -100,6 +113,18 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
         System.out.println(toString());
         System.out.println(getPhoneCalls().toString());
     }
+
+    /**
+     * Display function for displaying from file
+     */
+    public void DisplayFromFile()
+    {
+        System.out.println();
+        System.out.println(toString());
+        System.out.println(getPhoneCalls().toString());
+    }
+
+
 
 
 

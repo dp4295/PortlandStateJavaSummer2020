@@ -45,12 +45,12 @@ public class Project2IT extends InvokeMainTestCase {
     }
 
 
-    @Test
-    public void nineCommandlineArgument(){
-        MainMethodResult result = invokeMain("-textFile", "path" , "Deep", "123-123-1234", "123-123-1111", "1/7/2020", "12:34", "1/7/2020", "12:45");
-        assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardOut(), containsString("You meet MAXIMUM argument require"));
-    }
+//    @Test
+//    public void nineCommandlineArgument(){
+//        MainMethodResult result = invokeMain("-textFile", "path" , "Deep", "123-123-1234", "123-123-1111", "1/7/2020", "12:34", "1/7/2020", "12:45");
+//        assertThat(result.getExitCode(), equalTo(1));
+//        assertThat(result.getTextWrittenToStandardOut(), containsString("You meet MAXIMUM argument require"));
+//    }
 
 
     @Test

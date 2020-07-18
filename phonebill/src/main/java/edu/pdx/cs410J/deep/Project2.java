@@ -1,13 +1,22 @@
 package edu.pdx.cs410J.deep;
 
+import edu.pdx.cs410J.ParserException;
+
 import java.io.*;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  * The main class for the CS410J Phone Bill Project
  */
 public class Project2 {
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws IOException, ParserException {
+
+    // Do you want to read from file
+    Scanner in = new Scanner(System.in);
+
+
 
     if (args.length == 0) {
       System.out.println("No command line argument found");
@@ -120,50 +129,83 @@ public class Project2 {
 
 
       } else if (args.length == 9) {
-      System.out.println("Congradulation, You meet MAXIMUM require arguments.") ;
+      System.out.println("Congradulation, You meet MAXIMUM require arguments.");
 
 
       // Check if path first argument is -textFile
-      if(args[0].equals("-textFile")){
+      if (args[0].equals("-textFile")) {
 
         // ArgumentValidationCheck class contain methods to argument validation
         ArgumentValidationCheck validationobj = new ArgumentValidationCheck();
-        validationobj.isPathCorrect(args[1]);
+        if (validationobj.isPathCorrect(args[1])) {
+          //parse the file name from path
+          String path = args[1];
+
+          // Split the entire string with "/" token
+          String breaks[] = path.split("/");
+          String filename = breaks[7];
+
+          // Create a new phone call record
+          PhoneCall call = new PhoneCall(args[3], args[4], args[5], args[6], args[7], args[8]);
+
+          // Create a bill object
+
+          PhoneBill mybill = new PhoneBill(args[2]);
+          mybill.addPhoneCall(call);
 
 
+          // ---> Second call <------
+          // Create a new phone call object
+          PhoneCall call2 = new PhoneCall("555-555-5555", "666-666-6666", "6/7/2020", "12:00", "6/7/2020", "12:30");
+          // Add call to bill object
+          mybill.addPhoneCall(call2);
+          // ----> Added second call to call object <----
 
 
+          mybill.display();
 
-        // Create a new phone call record
-        PhoneCall call = new PhoneCall(args[3], args[4], args[5], args[6], args[7], args[8]);
+          // before creating a file make sure to valid isPathCorrect and parse file name
+          mybill.CreateFile(filename);
 
-        // Create a bill object
+          mybill.WriteToFile(args[1], mybill);
 
-        PhoneBill mybill = new PhoneBill(args[2]);
-        mybill.addPhoneCall(call);
-       mybill.display();
-
-
-       //mybill.CreateFile();
-
+        }
       }
 
 
+          // --> Reading from file <----
+          // Do you want to read from file
+    System.out.println();
+    System.out.println("Do you want read from file. Press 1 for yes or 2 for No");
+    String option;
+    do{
+      System.out.print("Input 1 or 2: ");
+      option = in.nextLine();
+
+
+      if(option.equals("1")) {
+
+//         String File;
+//         String path = "src/main/resources/edu/pdx/cs410J/deep/file.txt";
+        String customername;
+        System.out.println("Full customer name: e.g valid name: Deep Patel");
+        customername = in.nextLine();
+
+        PhoneBill bill = new PhoneBill(null);
+        TextParser textparser = new TextParser("src/main/resources/edu/pdx/cs410J/deep/file.txt", bill,customername);
+        System.out.println(textparser.parse());
 
 
 
-
-
-
-
-
-
-
-
-
-
-      System.exit(1);
+      }else if(option.equals("2")){
+        System.out.println("Exit the program");
+        System.exit(0);
       }
+
+    } while(!(Pattern.matches("[1-2]", option)));
+    // ----> End of reading from file <---
+
+    }
 
        else if (args.length >= 10) {
         System.out.println("Extra arguments");
@@ -175,8 +217,6 @@ public class Project2 {
 //      System.out.println(arg);
 //    }
 //    System.exit(1);
-
-
 
   }
 }

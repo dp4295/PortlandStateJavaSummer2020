@@ -8,6 +8,7 @@ $ java edu.pdx.cs410J.deep.Project1 [options] <args>
 [options] :
 -README : Display readme file
 -print  : use this option with below arguments to print
+-TextFile: Read/Write the phone bill
 [args] <in below order>  :
 customer
 callernumber
@@ -26,5 +27,5 @@ start time   : 24:00
 end time     : mm/dd/yyyy or m/d/yyyy or mm/d/yyyy or m/dd/yyyy
 end time     : 24:00
 
-
++
 
