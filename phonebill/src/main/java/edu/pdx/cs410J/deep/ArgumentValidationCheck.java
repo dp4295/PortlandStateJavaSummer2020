@@ -1,5 +1,6 @@
 package edu.pdx.cs410J.deep;
 
+import java.io.File;
 import java.util.regex.Pattern;
 
 
@@ -100,16 +101,38 @@ public class ArgumentValidationCheck {
      *  This method check for valid path
      * @return valid or invalid message
      */
-    public boolean isPathCorrect(String path) {
-        if(path.startsWith("src/main/resources/edu/pdx/cs410J/deep/") && path.endsWith(".txt")){
-            System.out.println("File created");
+    public boolean isvalidfilename(String path) {
+        if (path.endsWith(".txt")) {
+            // System.out.println("File can be created");
             return true;
-        }else{
-            System.out.println("Something is wrong, can not create file this time. Check the path");
+        } else {
+            System.out.println("Invalid file name. Can't create file");
             return false;
         }
-
     }
+
+        /** This method check if file is exist or not <code>isFileExist</code>
+         * @return valid or invlid message
+         * @return Boolean
+         */
+        public boolean isFileExist(String filename){
+
+            File file = new File(filename);
+
+            if(file.exists())
+            {
+                System.out.println("File is exist");
+                return true;
+            }
+            else
+            {
+                System.out.println("File doesn't exist");
+                return false;
+            }
+
+        }
+
+
 
 
 

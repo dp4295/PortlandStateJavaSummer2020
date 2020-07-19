@@ -45,21 +45,37 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
      * This method is used to create a file at destination <code>CreateFile</code>
      * @return Success, failure or file already exist message
      */
-      public void CreateFile(String filename){
+      public void CreateFile(String filename) throws IOException {
 
-          try{
-              File newfile = new File("src/main/resources/edu/pdx/cs410J/deep/" + filename);
+
+
+              File newfile = new File( filename);
+
               if(newfile.createNewFile())
               {
                   System.out.println("File created");
+
               }else{
                   System.out.println("File already exist");
               }
 
-          } catch (IOException e) {
-              System.out.println("Something is wrong, can not create file this time");
-              e.printStackTrace();
-          }
+
+
+//          try{
+//
+//              File newfile = new File("*deep/" + filename);
+//
+//              if(newfile.createNewFile())
+//              {
+//                  System.out.println("File created");
+//              }else{
+//                  System.out.println("File already exist");
+//              }
+//
+//          } catch (IOException e) {
+//              System.out.println("Something is wrong, can not create file this time");
+//              e.printStackTrace();
+//          }
       }
 
     /**

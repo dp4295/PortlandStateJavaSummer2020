@@ -105,36 +105,42 @@ public class Project2Test extends InvokeMainTestCase {
     public void nineCommandlineArgument(){
         MainMethodResult result = invokeMain("-textFile", "src/main/resources/edu/pdx/cs410J/deep/file.txt" , "Deep", "123-123-1234", "123-123-1111", "1/7/2020", "12:34", "1/7/2020", "12:45");
       //  assertThat(result.getExitCode(), equalTo(0));
-        assertThat(result.getTextWrittenToStandardOut(), containsString("Congradulation, You meet MAXIMUM require arguments."));
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Passed nine arguments"));
     }
 
+
+//    @Test
+//    public void tenCommnadlineArgument(){
+//        MainMethodResult result = invokeMain("-textFile","deep/deep.txt", "-print", "Deep", "123-123-123", "123-123-1234","1/7/2020", "1:23", "1/7/2020", "1:30", "Extra");
+//        assertThat(result.getExitCode(), equalTo(0));
+//      //  assertThat(result.getTextWrittenToStandardOut(), containsString(""));
+//    }
+
+//    @Test
+//    public void fileExistbutDifferentCustomerName() {
+//        MainMethodResult result = invokeMain("-textFile", "deep/deep.txt", "-print", "DIFFERENT", "123-123-123", "123-123-1234", "1/7/2020", "1:23", "1/7/2020", "1:30");
+//        assertThat(result.getTextWrittenToStandardOut(), containsString("Customer given in command line is different than the one found in the text file"));
+//
+//    }
 
     @Test
-    public void tenCommnadlineArgument(){
-        MainMethodResult result = invokeMain("-textFile","path", "Deep", "123-123-123", "123-123-1234","1/7/2020", "1:23", "1/7/2020", "1:30", "Extra");
-        assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardOut(), containsString("Extra arguments"));
+    public void invalidFilename(){
+        MainMethodResult result = invokeMain("-textFile", "file.txxt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "1/7/2020", "10:41");
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Invalid file name. Can't create file"));
     }
 
 
-    @Test
-    public void invalidPathTest(){
-        MainMethodResult result = invokeMain("-textFile", "src/main/resources/edu/cs410J/deep/file.txt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "1/7/2020", "10:41");
-        assertThat(result.getTextWrittenToStandardOut(), containsString("Something is wrong, can not create file this time. Check the path"));
-    }
-
-
-    @Test
-    public void fileNotCreated(){
-        MainMethodResult result = invokeMain("-textFile", "src/main/resources/edu/pdx/deep/file.txt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "1/7/2020", "10:41");
-        assertThat(result.getTextWrittenToStandardOut(), containsString("Something is wrong, can not create file this time. Check the path"));
-    }
-
-    @Test
-    public void fileCreated(){
-        MainMethodResult result = invokeMain("-textFile", "src/main/resources/edu/pdx/cs410J/deep/file1.txt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "1/7/2020", "10:41");
-        assertThat(result.getTextWrittenToStandardOut(), containsString("File created"));
-    }
+//    @Test
+//    public void fileNotCreated(){
+//        MainMethodResult result = invokeMain("-textFile", "empty", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "1/7/2020", "10:41");
+//        assertThat(result.getTextWrittenToStandardOut(), containsString("File is exist"));
+//    }
+//
+//    @Test
+//    public void fileCreated(){
+//        MainMethodResult result = invokeMain("-textFile", "deep/deep.txt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "1/7/2020", "10:41");
+//        assertThat(result.getTextWrittenToStandardOut(), containsString("File created"));
+//    }
 
 
     @Test
@@ -153,7 +159,7 @@ public class Project2Test extends InvokeMainTestCase {
     @Test
     public void writingToNewfileNotPossible(){
         MainMethodResult result = invokeMain("-textFile", "src/main/resources/edu/pdx/cs410J/deep/file.trt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "1/7/2020", "10:41");
-        assertThat(result.getTextWrittenToStandardOut(), containsString("Something is wrong, can not create file this time. Check the path"));
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Invalid file name. Can't create file"));
     }
 
 }

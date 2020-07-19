@@ -35,6 +35,19 @@ public class TextParser implements PhoneBillParser {
 
             bufferedreader = new BufferedReader(new FileReader(file));
 
+
+//            result = bufferedreader.readLine();
+//            if(result != null)
+//            {
+//                String breaks[] = result.split(",");
+//                if(breaks[0].equals(userinput))
+//                {
+//                    System.out.println("Customer given in command line is different than the one found in the text file");
+//
+//                    System.exit(1);
+//                }
+//            }
+
             while ((result = bufferedreader.readLine()) != null){
 
                // System.out.println(result);
@@ -56,14 +69,21 @@ public class TextParser implements PhoneBillParser {
 
 
                 String customername = breaks[0];
-//
-//                if(customername !=  userinput)
-//                {
-//                    bufferedreader.close();
-//                    System.out.println("Customer given in command line is different than the one found in the text file");
-//                    System.exit(1);
-//                }
 
+//                System.out.println(customername);
+//                System.out.println(userinput);
+//
+                if(phonebill != null && !phonebill.getCustomer().equalsIgnoreCase(breaks[0]))
+                {
+                    bufferedreader.close();
+                    System.out.println("Customer given in command line is different than the one found in the text file");
+                   // throw new ParserException("");
+                    System.exit(1);
+                }
+
+                if(phonebill == null){
+                    phonebill = new PhoneBill(breaks[0]);
+                }
                 String callernumber = breaks[1];
                 String calleenumber = breaks[2];
 
@@ -106,5 +126,17 @@ public class TextParser implements PhoneBillParser {
         this.path = path;
         this.phonebill = phonebill;
         this.userinput = userinput;
+    }
+
+    public TextParser(String filename, String userinput)
+    {
+        this.path = filename;
+        this.userinput = userinput;
+    }
+
+    public TextParser(String filename, PhoneBill phonebill)
+    {
+        this.path = filename;
+        this.phonebill = phonebill;
     }
 }

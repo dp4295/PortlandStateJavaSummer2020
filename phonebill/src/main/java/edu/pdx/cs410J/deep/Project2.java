@@ -129,7 +129,8 @@ public class Project2 {
 
 
       } else if (args.length == 9) {
-      System.out.println("Congradulation, You meet MAXIMUM require arguments.");
+
+      System.out.println("Passed nine arguments");
 
 
       // Check if path first argument is -textFile
@@ -137,13 +138,15 @@ public class Project2 {
 
         // ArgumentValidationCheck class contain methods to argument validation
         ArgumentValidationCheck validationobj = new ArgumentValidationCheck();
-        if (validationobj.isPathCorrect(args[1])) {
+        if (validationobj.isvalidfilename(args[1])) {
 
           String path = args[1]; // saving path into local variable
 
           // Split the entire string with "/" token
           String breaks[] = path.split("/");
-          String filename = breaks[7];
+          String filename = breaks[1];
+
+          System.out.println(filename);
 
 
           // Check validation for all command line arguments
@@ -175,8 +178,7 @@ public class Project2 {
           mybill.CreateFile(filename);
 
           // Here the first argument is path and second argument is PhoneBill object
-          mybill.WriteToFile(args[1], mybill);
-
+          mybill.WriteToFile(filename, mybill);
 
 
           // Create a newline in output
@@ -188,7 +190,7 @@ public class Project2 {
             System.out.println("Read from file");
             System.out.println("_______________");
             // READING FROM FILE
-            TextParser textparser = new TextParser(args[1], mybill,args[2]);
+            TextParser textparser = new TextParser(filename, mybill,args[2]);
             System.out.println(textparser.parse());
         }
       }
@@ -201,10 +203,118 @@ public class Project2 {
 //    // ----> End of reading from file <---
 
     } else if (args.length >= 10) {
-        System.out.println("Extra arguments");
-        System.exit(1);
+
+
+      // getting file name
+      String path = args[1]; // saving path into local variable
+      // Split the entire string with "/" token
+      String breaks[] = path.split("/");
+      String filename = breaks[1];
+
+
+      ArgumentValidationCheck validationcheck = new ArgumentValidationCheck();
+
+      // In this case we would like to print PhoneBill object if file is not exist
+      if ((args[0].equals("-textFile") && args[2].equals("-print") && !(validationcheck.isFileExist(filename)) && validationcheck.isvalidfilename(args[1]) && args[2].equals("-print"))) {
+
+         System.out.println("File not exist");
+
+         String options1 = args[0];
+         String file = filename;
+         String option2 = args[2];
+         String customername = args[3];
+         String callernumber = args[4];
+         String calleenumner= args[5];
+         String startdate = args[6];
+         String starttime = args[7];
+         String enddate = args[8];
+         String endtime = args[9];
+
+
+         PhoneCall call = new PhoneCall(callernumber, calleenumner, startdate, starttime, enddate, endtime);
+         PhoneBill bill = new PhoneBill(customername);
+         bill.addPhoneCall(call);
+
+
+
+        // before creating a file make sure to valid isPathCorrect and parse file name we already did it earlier
+        bill.CreateFile(filename);
+
+        // Here the first argument is path and second argument is PhoneBill object
+        bill.WriteToFile(filename, bill);
+
+
+
+        // Create a newline in output
+        for(int i=0; i<=3; ++i)
+        {
+          System.out.println();
+        }
+
+        System.out.println("Read from file");
+        System.out.println("_______________");
+        // READING FROM FILE
+        TextParser textparser = new TextParser(filename, bill, customername);
+        System.out.println(textparser.parse());
+
+
+        System.exit(0);
+      }else {
+
+        if(validationcheck.isFileExist(filename)) {
+
+          String options1 = args[0];
+          String file = filename;
+          String option2 = args[2];
+          String customername = args[3];
+          String callernumber = args[4];
+          String calleenumner= args[5];
+          String startdate = args[6];
+          String starttime = args[7];
+          String enddate = args[8];
+          String endtime = args[9];
+
+
+          PhoneCall call = new PhoneCall(callernumber, calleenumner, startdate, starttime, enddate, endtime);
+          PhoneBill bill = new PhoneBill(customername);
+          bill.addPhoneCall(call);
+//
+//
+//
+//          // before creating a file make sure to valid isPathCorrect and parse file name we already did it earlier
+//          bill.CreateFile(filename);
+//
+//          // Here the first argument is path and second argument is PhoneBill object
+//          bill.WriteToFile(filename, bill);
+
+
+          // Create a newline in output
+          for(int i=0; i<=3; ++i)
+          {
+            System.out.println();
+          }
+
+          System.out.println("Read from file");
+          System.out.println("_______________");
+          // READING FROM FILE
+
+
+          TextParser textparser = new TextParser(filename, bill);
+          System.out.println(textparser.parse());
+
+
+
+          System.exit(0);
+        }
+        else{
+        //  System.out.println("Extra arguments");
+          System.exit(1);
+        }
+
       }
 
+
+    }
 
 //    for (String arg : args) {
 //      System.out.println(arg);
@@ -212,4 +322,6 @@ public class Project2 {
 //    System.exit(1);
 
   }
+
+
 }
