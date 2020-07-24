@@ -19,28 +19,28 @@ public class PhoneCallTest {
 
   @Test
   public void getStartTimeStringNeedsToBeImplemented() {
-    PhoneCall call = new PhoneCall("123-123-1234" ,"123-222-1234", "7/12/2020","12:00","7/12/2020", "13:00");
+    PhoneCall call = new PhoneCall("123-123-1234" ,"123-222-1234", "7/12/2020","12:00", "am", "7/12/2020", "12:00", "am");
     assertThat(call.getStartTimeString(), not(nullValue()));
   }
 
   @Test
   public void initiallyAllPhoneCallsHaveTheSameCallee() {
     String callee = "123-333-1234";
-    PhoneCall call = new PhoneCall("123-123-1234", callee, "7/12/2020","12:00","7/12/2020", "13:00");
+    PhoneCall call = new PhoneCall("123-123-1234", callee, "7/12/2020","11:00", "am", "7/12/2020", "12:00", "pm");
     assertThat(call.getCallee(), equalTo(callee));
   }
 
   @Test
   public void forProject1ItIsOkayIfGetStartTimeReturnsNull() {
 
-    PhoneCall call = new PhoneCall("123-123-1234" ,"123-222-1234", "7/12/2020",null,"7/12/2020", "13:00");
+    PhoneCall call = new PhoneCall("123-123-1234" ,"123-222-1234", "7/12/2020",null, "am", "7/12/2020", "13:00", "am");
     assertThat(call.getStartTime(), is(nullValue()));
   }
 
   @Test
   public void calleeIsNotNumber() {
     String callee = "123-45-678a";
-    PhoneCall call = new PhoneCall("123-123-1234" ,"123-222-123a", "7/12/2020","12:00","7/12/2020", "13:00");
+    PhoneCall call = new PhoneCall("123-123-1234" ,"123-222-123a", "7/12/2020","12:00", "am", "7/12/2020", "12:00", "pm");
     for (String str : call.getCallee().split("-")[1].split("-")) {
       Integer.parseInt(str);
     }
@@ -49,14 +49,14 @@ public class PhoneCallTest {
 
   @Test
   public void forProject1ItIsOkayIfGetEndTimeReturnsNull() {
-    PhoneCall call = new PhoneCall("123-123-1234" ,"123-222-1234", "7/12/2020","12:00",null, null);
+    PhoneCall call = new PhoneCall("123-123-1234" ,"123-222-1234", "7/12/2020","11:00","am", null, null, null );
     assertThat(call.getEndTimeString(), is(nullValue()));
 
   }
 
   @Test
   public void StartTimeEndTimeIsNotSame() {
-    PhoneCall call = new PhoneCall("123-123-1234" ,"123-222-1234", "7/12/2020","12:00","7/12/2020", "13:00");
+    PhoneCall call = new PhoneCall("123-123-1234" ,"123-222-1234", "7/12/2020","11:00", "am", "7/12/2020", "12:00", "pm");
     assertThat(call.getEndTimeString(), not(call.getStartTimeString()));
   }
 
@@ -72,7 +72,7 @@ public class PhoneCallTest {
     {
       if(!(Pattern.matches("[0-90-9]{2}:[0-90-9]{2}", start_time)))
       {
-        System.out.println("Valid start date but invalid start time E.g: 2/04/2020 12:34");
+        System.out.println("Valid start date but invalid start time E.g: 2/04/2020 12:34 am/pm");
       }
       else {
         //  System.out.println("Valid date and time");

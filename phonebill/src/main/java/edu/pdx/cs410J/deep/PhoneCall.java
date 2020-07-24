@@ -2,16 +2,20 @@ package edu.pdx.cs410J.deep;
 
 import edu.pdx.cs410J.AbstractPhoneCall;
 
+import javax.swing.*;
 
-public class PhoneCall extends AbstractPhoneCall{
+
+public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall>{
 
 
   private String callee;
   private String caller;
   private String start;
   private String starttime;
+  private String startampm;
   private String end;
   private String endtime;
+  private String endampm;
 
   /**
    * PhoneCall Constructor
@@ -23,20 +27,22 @@ public class PhoneCall extends AbstractPhoneCall{
    * @param start
    *        Date call began (e.g: 7/23/2020)
    * @param starttime
-   *        Start time (eg: 24:00)
+   *        Start time (eg: 12:00)
    * @param end
    *        Date call end (e.g: 7/23/2020)
    * @param  endtime
-   *        end time (e.g: 24:00)
+   *        end time (e.g: 12:00)
    */
-  public PhoneCall(String caller, String callee, String start, String starttime, String end, String endtime) {
+  public PhoneCall(String caller, String callee, String start, String starttime, String startampm, String end, String endtime,String endampm) {
 
     this.caller = caller;
     this.callee = callee;
     this.start = start;
     this.starttime = starttime;
+    this.startampm = startampm;
     this.end = end;
     this.endtime = endtime;
+    this.endampm = endampm;
   }
 
   public void add(PhoneCall phonecall) {
@@ -44,8 +50,10 @@ public class PhoneCall extends AbstractPhoneCall{
     this.callee = phonecall.callee;
     this.start = phonecall.start;
     this.starttime = phonecall.starttime;
+    this.startampm = phonecall.startampm;
     this.end = phonecall.end;
     this.endtime = phonecall.endtime;
+    this.endampm = phonecall.endampm;
   }
 
 
@@ -72,24 +80,24 @@ public class PhoneCall extends AbstractPhoneCall{
   @Override
   public String getStartTimeString() {
 
-    if(start == null && starttime == null)
+    if(start == null && starttime == null & startampm ==null)
     {
       return null;
     }
 
-    String start_date_time = start + " " + starttime;
+    String start_date_time = start + " " + starttime + " " + startampm;
     return start_date_time;
   }
 
   @Override
   public String getEndTimeString() {
 
-    if(end == null && endtime == null)
+    if(end == null && endtime == null && endampm == null)
     {
       return null;
     }
 
-    String end_date_time = end + " " + endtime;
+    String end_date_time = end + " " + endtime + " " + endampm;
     return end_date_time;
   }
 
@@ -103,5 +111,17 @@ public class PhoneCall extends AbstractPhoneCall{
   }
 
 
+  @Override
+  public int compareTo(PhoneCall o){
+
+    if(this.start.compareTo(o.start) != 0)
+    {
+      return this.start.compareTo((o.start));
+    }
+    else
+    {
+      return this.end.compareTo((o.end));
+    }
+  }
 }
 

@@ -6,11 +6,12 @@ import edu.pdx.cs410J.AbstractPhoneCall;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.util.*;
 
-public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
+public class PhoneBill extends AbstractPhoneBill{
 
     private String customer;
     List<PhoneCall> callcollection;
@@ -30,13 +31,21 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
     }
 
     @Override
-    public void addPhoneCall(PhoneCall call) {
-        callcollection.add(call);
+    public void addPhoneCall(AbstractPhoneCall call) {
+        callcollection.add((PhoneCall) call);
     }
+
+//    @Override
+//    public void addPhoneCall(PhoneCall call) {
+//        callcollection.add(call);
+//    }
 
     @Override
     public List<PhoneCall> getPhoneCalls() {
-        return callcollection;
+
+      Collections.sort(callcollection);
+
+       return  callcollection;
     }
 
 
@@ -101,12 +110,19 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
 
 
     /**
-     * This method is used to parse the date from text file <code>ReadFromFile</code>
+     * This method is used by PrettyPrinter class to write in to PrettyPrinter
      */
-     public void ReadFromFile(String customename)
-     {
+    public static String prettyPrint(PhoneCall phonecall) throws ParseException {
 
-     }
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+        Date startdate = format.parse(phonecall.getStartTimeString());
+        Date enddate = format.parse(phonecall.getEndTimeString());
+        long phonecallduaration = enddate.getTime() - startdate.getTime() ;
+
+        return phonecall.getPhoneCallToWrite() + "," + phonecallduaration;
+
+    }
+
 
 
     /**

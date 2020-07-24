@@ -8,7 +8,9 @@ $ java edu.pdx.cs410J.deep.Project1 [options] <args>
 [options] :
 -README : Display readme file
 -print  : use this option with below arguments to print
--TextFile: Read/Write the phone bill
+-TextFile file: Read/Write the phone bill
+-pretty file: Pretty print the phone bill to a text file or standard out
+
 [args] <in below order>  :
 customer
 callernumber
@@ -34,15 +36,14 @@ end time     : 24:00
 -README
 Above argument display readme.txt file
 
-7 argument
-"Deep Patel" 123-123-1234 123-123-1234 1/7/2020 10:39  1/7/2020 10:41
-Above argument only add record to PhoneBill object. It will not display PhoneBill object
 
-8 argument
--print "Deep Patel" 123-123-1234 123-123-1234 1/7/2020 10:39  1/7/2020 10:41
-This add phonebill and display the phonebill record
-
-9 arguments
--textFile "src/main/resources/edu/pdx/cs410J/deep/file.txt" "Deep Patel" 123-123-1234 123-123-1234 1/7/2020 10:39  1/7/2020 10:41
+12 arguments
+-textFile deep/deep.txt -pretty Project3 123-456-7899 123-123-1234 01/08/2020 12:00 pm 01/08/2020 12:15 pm
 Above command write to file and read from file
+
+13 arguments
+-textFile deep/deep.txt -pretty deep/pretty.txt Project3 123-456-7899 123-123-1234 01/08/2020 12:00 pm 01/08/2020 12:15 pm
+
+
+
 

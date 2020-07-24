@@ -24,7 +24,7 @@ public class PhoneBillTest {
     @Test
     public void phonebillCanAddPhonecall(){
         PhoneBill phonebill = new PhoneBill("Deep Pate");
-        PhoneCall phonecall = new PhoneCall("555-555-5555", "666-666-6666", "6/7/2020", "12:00", "6/7/2020", "12:30");
+        PhoneCall phonecall = new PhoneCall("555-555-5555", "666-666-6666", "6/7/2020", "11:00", "am","6/7/2020", "12:30", "pm");
         phonebill.addPhoneCall(phonecall);
         assertThat(phonebill.getPhoneCalls().size(), equalTo(1));
     }

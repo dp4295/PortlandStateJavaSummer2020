@@ -1,6 +1,7 @@
 package edu.pdx.cs410J.deep;
 
 import com.sun.tools.javac.Main;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -17,20 +18,20 @@ import edu.pdx.cs410J.InvokeMainTestCase;
  * from <code>Project1IT</code> which is an integration test (and can handle the calls
  * to {@link System#exit(int)} and the like.
  */
-public class Project2Test extends InvokeMainTestCase {
+public class Project3Test extends InvokeMainTestCase {
 
     /**
-     * Invokes the main method of {@link Project2} with the given arguments.
+     * Invokes the main method of {@link Project3} with the given arguments.
      */
     private InvokeMainTestCase.MainMethodResult invokeMain(String... args) {
-        return invokeMain(Project2.class, args );
+        return invokeMain(Project3.class, args );
     }
 
 
   @Test
   public void readmeCanBeReadAsResource() throws IOException {
     try (
-      InputStream readme = Project2.class.getResourceAsStream("README.txt");
+      InputStream readme = Project3.class.getResourceAsStream("README.txt");
     ) {
       assertThat(readme, not(nullValue()));
       BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
@@ -51,7 +52,7 @@ public class Project2Test extends InvokeMainTestCase {
     public void oneComandlineArgument(){
         MainMethodResult result = invokeMain("-README");
         assertThat(result.getExitCode(),equalTo(1));
-        assertThat(result.getTextWrittenToStandardOut(),containsString("Missing customer name, caller number, callee number, start date, start time, end date and end time"));
+        assertThat(result.getTextWrittenToStandardOut(),containsString("Only one argument found"));
   }
 
 
@@ -88,8 +89,6 @@ public class Project2Test extends InvokeMainTestCase {
         MainMethodResult result = invokeMain("-print", "Deep", "123-123-1234", "123-123-1111", "7/12/2020", "12:00");
         assertThat(result.getExitCode(), equalTo(1));
         assertThat(result.getTextWrittenToStandardOut(), containsString("Invalid command line arguments"));
-
-
     }
 
 
@@ -97,17 +96,29 @@ public class Project2Test extends InvokeMainTestCase {
     public void sevenCommandlineArgument(){
         MainMethodResult result = invokeMain("-print", "Deep", "123-123-1234", "123-123-1111", "7/12/2020", "12:00", "7/12/2020");
         assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardOut(), containsString("Invalid arguments.It should not have any -print, -README or -textFile"));
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Invalid command line arguments"));
+    }
+
+    @Test
+    public void eightCommandlineArgument(){
+        MainMethodResult result = invokeMain("-print", "Deep", "123-123-1234", "123-123-1111", "7/12/2020", "12:00","am", "7/12/2020");
+        assertThat(result.getExitCode(), equalTo(1));
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Invalid command line arguments"));
+    }
+
+    @Test
+    public void ElevancommandlineArgument(){
+        MainMethodResult result = invokeMain("-textFile", "deep/file.txt" , "Deep", "123-123-1234", "123-123-1111", "1/7/2020", "12:34", "am", "1/7/2020", "12:45", "am");
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Passed eleven arguments"));
     }
 
 
     @Test
-    public void nineCommandlineArgument(){
-        MainMethodResult result = invokeMain("-textFile", "src/main/resources/edu/pdx/cs410J/deep/file.txt" , "Deep", "123-123-1234", "123-123-1111", "1/7/2020", "12:34", "1/7/2020", "12:45");
-      //  assertThat(result.getExitCode(), equalTo(0));
-        assertThat(result.getTextWrittenToStandardOut(), containsString("Passed nine arguments"));
+    public void checkStartBeforeEnd()
+    {
+        MainMethodResult result = invokeMain("-textFile", "deep/file.txt" , "Deep", "123-123-1234", "123-123-1111", "1/8/2020", "12:34", "am", "1/7/2020", "12:45", "am");
+        assertThat(result.getTextWrittenToStandardOut(), containsString("phone call's end time is before its start time"));
     }
-
 
 //    @Test
 //    public void tenCommnadlineArgument(){
@@ -125,7 +136,7 @@ public class Project2Test extends InvokeMainTestCase {
 
     @Test
     public void invalidFilename(){
-        MainMethodResult result = invokeMain("-textFile", "file.txxt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "1/7/2020", "10:41");
+        MainMethodResult result = invokeMain("-textFile", "file.txxt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "am","1/7/2020", "10:41", "pm");
         assertThat(result.getTextWrittenToStandardOut(), containsString("Invalid file name. Can't create file"));
     }
 
@@ -143,23 +154,44 @@ public class Project2Test extends InvokeMainTestCase {
 //    }
 
 
+    @Ignore
     @Test
     public void fileAlreadyexit(){
-        MainMethodResult result = invokeMain("-textFile", "src/main/resources/edu/pdx/cs410J/deep/file1.txt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "1/7/2020", "10:41");
+        MainMethodResult result = invokeMain("-textFile", "deep/file1.txt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "am", "1/7/2020", "10:41", "pm");
         assertThat(result.getTextWrittenToStandardOut(), containsString("File already exist"));
     }
 
+    @Ignore
     @Test
     public void writingToNewfile(){
-        MainMethodResult result = invokeMain("-textFile", "src/main/resources/edu/pdx/cs410J/deep/file.txt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "1/7/2020", "10:41");
+        MainMethodResult result = invokeMain("-textFile", "deep/file.txt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "am" ,"1/7/2020", "10:41", "am");
         assertThat(result.getTextWrittenToStandardOut(), containsString("Write out into file successfully"));
     }
 
 
+    @Ignore
     @Test
     public void writingToNewfileNotPossible(){
-        MainMethodResult result = invokeMain("-textFile", "src/main/resources/edu/pdx/cs410J/deep/file.trt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "1/7/2020", "10:41");
+        MainMethodResult result = invokeMain("-textFile", "deep/file.trt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "1/7/2020", "10:41");
         assertThat(result.getTextWrittenToStandardOut(), containsString("Invalid file name. Can't create file"));
     }
+
+
+
+    @Test
+    public void isAmPmvalid()
+    {
+        MainMethodResult result = invokeMain("-textFile",  "deep/file.txt",  "Project3" ,  "123-456-7890",  "135-789-0123",  "01/08/2020" , "12:00" ,  "AM", "01/08/2020", "11:45", "pm");
+        assertThat(result.getTextWrittenToStandardOut(), containsString("am/pm required"));
+    }
+
+
+    @Test
+    public void malformatedDate(){
+        MainMethodResult result = invokeMain("-textFile",  "deep/file.txt",  "Project3" ,  "123-456-7890",  "135-789-0123",  "01/zz/2020" , "12:00" ,  "am", "01/08/2020", "11:45", "pm");
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Invalid start date E.g 2/04/2020"));
+    }
+
+
 
 }

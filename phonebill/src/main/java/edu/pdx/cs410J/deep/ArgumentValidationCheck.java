@@ -1,35 +1,70 @@
 package edu.pdx.cs410J.deep;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.SimpleFormatter;
 import java.util.regex.Pattern;
 
 
 public class ArgumentValidationCheck {
 
     /**
-     * This methods check if passed date and time matches or not
+     * This methods check phone call’s end time is before its starts time
+     * @Return true false
      */
-    public void validInvalidDateAndTime(String start, String start_time, String end, String end_time) {
+      public Boolean checkForEndTimeBeForStartTime(String starttime, String endtime) throws ParseException {
+
+          SimpleDateFormat simpledateformatter = new SimpleDateFormat("dd/MM/yyyy");
+          Date start = simpledateformatter.parse(starttime);
+          Date end = simpledateformatter.parse(endtime);
+
+          if (start.compareTo(end) > 0) {
+              return false; // start occur after end
+          } else if (start.compareTo(end) < 0) {
+              return true; // start date occur before end
+          }
+
+          return false;
+      }
 
 
-//        String start = "01/15/2020";
-//        String start_time = "11:39";
-//        String end = "02/20/2020";
-//        String end_time = "11:39";
 
 
-        // Check valid date mm/dd/yyyy or m/dd/yyyy or mm/d/yyyy or m/d/yyyy
+
+    /**
+     * This methods check if passed date match with format or not
+     * Valid format
+     * 07/23/2020 12:00 PM
+     * 07/23/2020 12:23 PM
+     */
+    public void validInvalidDateAndTime(String start, String start_time, String startampm,  String end, String end_time, String endampm) {
+
+
+        // Check valid date mm/dd/yyyy am/pm or m/dd/yyyy or mm/d/yyyy or m/d/yyyy
         if((Pattern.matches("[0-90-9]{2}/[0-90-9]{2}/[0-90-90-90-9]{4}", start) ) || (Pattern.matches("[0-9]{1}/[0-90-9]{2}/[0-90-90-90-9]{4}", start) ) ||
                 (Pattern.matches("[0-90-9]{2}/[0-9]{1}/[0-90-90-90-9]{4}", start) || (Pattern.matches("[0-9]{1}/[0-9]{1}/[0-90-90-90-9]{4}", start) ) ))
         {
 
-            if(!(Pattern.matches("[0-90-9]{2}:[0-90-9]{2}", start_time)))
+           if(!(Pattern.matches("0[1-9]|1[012]", start_time)))
             {
-                System.out.println("Valid start date but invalid start time E.g: 2/04/2020 12:34");
-                System.exit(1);
+
+                if((Pattern.matches("am", startampm)) || (Pattern.matches("pm", startampm)))
+                {
+
+                }
+                else {
+//                    System.out.println("Valid start date but invalid start time E.g: 2/04/2020 12:34 am/pm");
+//                    System.exit(1);
+                    System.out.println("am/pm required");
+                    System.exit(1);
+                }
             }
             else {
-                //  System.out.println("Valid date and time");
+
+               System.out.println("Valid start date but invalid start time E.g: 2/04/2020 12:34 am/pm");
+               System.exit(1);
             }
         }
         else {
@@ -41,23 +76,28 @@ public class ArgumentValidationCheck {
         if((Pattern.matches("[0-90-9]{2}/[0-90-9]{2}/[0-90-90-90-9]{4}", end) ) || (Pattern.matches("[0-9]{1}/[0-90-9]{2}/[0-90-90-90-9]{4}", end) ) ||
                 (Pattern.matches("[0-90-9]{2}/[0-9]{1}/[0-90-90-90-9]{4}", end) || (Pattern.matches("[0-9]{1}/[0-9]{1}/[0-90-90-90-9]{4}", end))))
         {
-            if(!(Pattern.matches("[0-90-9]{2}:[0-90-9]{2}", end_time)))
+
+            if(!(Pattern.matches("0[1-9]|1[012]", end_time)))
             {
-                System.out.println("Valid end date but invalid end time E.g: 2/04/2020 12:34");
-                System.exit(1);
+                if((Pattern.matches("am", endampm)) || (Pattern.matches("pm", endampm)))
+                {
+
+                }else {
+                    System.out.println("am/pm required");
+                    System.exit(1);
+                }
+
             }
             else {
                 //  System.out.println("Valid date and time");
+                System.out.println("Valid end date but invalid end time E.g: 2/04/2020 12:34 am/pm");
+                System.exit(1);
             }
         }
         else {
             System.out.println("Invalid end date E.g 2/04/2020");
             System.exit(1);
         }
-
-
-
-
     }
 
 
@@ -131,14 +171,5 @@ public class ArgumentValidationCheck {
             }
 
         }
-
-
-
-
-
-
-
-
-
 
 }
