@@ -14,12 +14,20 @@ public class ArgumentValidationCheck {
      * This methods check phone call’s end time is before its starts time
      * @Return true false
      */
-      public Boolean checkForEndTimeBeForStartTime(String starttime, String endtime) throws ParseException {
+      public Boolean checkForEndTimeBeForStartTime(String starttime, String stime, String startampm, String endtime, String etime, String endampm) throws ParseException {
 
-          SimpleDateFormat simpledateformatter = new SimpleDateFormat("dd/MM/yyyy");
-          Date start = simpledateformatter.parse(starttime);
-          Date end = simpledateformatter.parse(endtime);
 
+          String std = starttime + " " + stime + " " + startampm;
+          String etd = endtime + " " + etime + " " + endampm;
+
+          SimpleDateFormat st = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
+          SimpleDateFormat et = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
+          Date start = st.parse(std);
+          Date end = et.parse(etd);
+
+//          System.out.print(start);
+//          System.out.print(end);
+//          System.out.print(start.compareTo(end));
           if (start.compareTo(end) > 0) {
               return false; // start occur after end
           } else if (start.compareTo(end) < 0) {

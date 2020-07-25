@@ -193,5 +193,11 @@ public class Project3Test extends InvokeMainTestCase {
     }
 
 
+    @Test
+    public void startTimeEndBeforeEndTime(){
+        MainMethodResult result = invokeMain("-textFile", "deep/deep.txt", "project3", "123-234-2222", "123-123-1234", "01/10/2020", "10:00", "pm", "01/10/2020", "3:45", "pm");
+        assertThat(result.getTextWrittenToStandardOut(), containsString("phone call's end time is before its start time"));
+    }
+
 
 }

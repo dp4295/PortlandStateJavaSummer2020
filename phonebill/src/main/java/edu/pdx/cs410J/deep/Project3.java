@@ -59,12 +59,8 @@ public class Project3 {
 
 
 
-
       // If passing argument length is 7 then args[0] should not be any option
       ArgumentValidationCheck validationCheck = new ArgumentValidationCheck();
-      if ((validationCheck.validInvalidOption(args)) == false) {
-
-        // this is valid case. option is missing but PhoneCall can be added to PhoneBill
 
 
         // Validate Date and Time
@@ -73,6 +69,12 @@ public class Project3 {
 
         // validate phone number
         validationcheck.validInvalidPhoneNumber(args[1],args[2]);
+
+        // return false, if the start date is before the end
+        if(!(validationcheck.checkForEndTimeBeForStartTime(args[3], args[4], args[5] ,args[6], args[7], args[8]))){
+          System.out.println("phone call's end time is before its start time");
+          System.exit(1);
+        }
 
         // Create a new phone call record
         PhoneCall call = new PhoneCall(args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
@@ -83,11 +85,6 @@ public class Project3 {
         // Add call record to bill object
         mybill.addPhoneCall(call);
 
-    //     mybill.display();
-      } else {
-        System.out.println("Invalid arguments.It has -print, -README or -textFile options");
-        System.exit(1);
-      }
     }
     else if (args.length == 10) {
         System.out.println("Congratulate you enter 9 arguments");
@@ -165,7 +162,7 @@ public class Project3 {
           String breaks[] = path.split("/");
           String filename = breaks[1];
 
-          System.out.println(filename);
+
 
 
           // Check validation for all command line arguments
@@ -179,8 +176,9 @@ public class Project3 {
           String end = args[8];
 
 
-          // True if the start date is before the end
-          if(!(validationcheck.checkForEndTimeBeForStartTime(start,end))){
+          // return false, if the start date is before the end
+//          System.out.print((validationcheck.checkForEndTimeBeForStartTime(start,args[6], args[7],end, args[9], args[10])));
+            if(!(validationcheck.checkForEndTimeBeForStartTime(start,args[6], args[7],end, args[9], args[10]))){
             System.out.println("phone call's end time is before its start time");
             System.exit(1);
           }
@@ -264,6 +262,15 @@ public class Project3 {
       ArgumentValidationCheck validationcheck = new ArgumentValidationCheck();
       validationcheck.validInvalidDateAndTime(startdate, starttime, startampm, enddate, endtime, endampm);
       validationcheck.validInvalidPhoneNumber(callernumber, calleenumber);
+
+      if(!(validationcheck.checkForEndTimeBeForStartTime(startdate,starttime, startampm,enddate, endtime, endampm))){
+        System.out.println("phone call's end time is before its start time");
+        System.exit(1);
+      }
+
+
+
+
       // In this case we would like to print PhoneBill object if file is not exist
       if ((args[0].equals("-textFile") && args[2].equals("-pretty") && !(validationcheck.isFileExist(filename)) && validationcheck.isvalidfilename(args[1]))) {
 //      if ((args[0].equals("-textFile") && args[2].equals("-pretty"))) {
@@ -370,6 +377,10 @@ public class Project3 {
       validationcheck.validInvalidDateAndTime(startdate, starttime, startampm, enddate, endtime, endampm);
       validationcheck.validInvalidPhoneNumber(callernumber, calleenumber);
 
+      if(!(validationcheck.checkForEndTimeBeForStartTime(startdate,starttime, startampm,enddate, endtime, endampm))){
+        System.out.println("phone call's end time is before its start time");
+        System.exit(1);
+      }
 
       // In this case we would like to print PhoneBill object if file is not exist
       if ((args[0].equals("-textFile") && args[2].equals("-pretty") && validationcheck.isvalidfilename(prettyfile))) {
@@ -437,9 +448,6 @@ public class Project3 {
         }
 
       }
-
-
-
 
 //      for (String arg : args) {
 //      System.out.println(arg);
