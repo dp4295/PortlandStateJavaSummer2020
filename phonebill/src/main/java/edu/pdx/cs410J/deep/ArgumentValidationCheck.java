@@ -10,11 +10,13 @@ import java.util.regex.Pattern;
 
 public class ArgumentValidationCheck {
 
+
+
     /**
      * This methods check phone call’s end time is before its starts time
      * @Return true false
      */
-      public Boolean checkForEndTimeBeForStartTime(String starttime, String stime, String startampm, String endtime, String etime, String endampm) throws ParseException {
+     public Boolean checkForEndTimeBeForStartTime(String starttime, String stime, String startampm, String endtime, String etime, String endampm) throws ParseException {
 
 
           String std = starttime + " " + stime + " " + startampm;
@@ -29,9 +31,9 @@ public class ArgumentValidationCheck {
 //          System.out.print(end);
 //          System.out.print(start.compareTo(end));
           if (start.compareTo(end) > 0) {
-              return false; // start occur after end
+              return false;
           } else if (start.compareTo(end) < 0) {
-              return true; // start date occur before end
+              return true;
           }
 
           return false;

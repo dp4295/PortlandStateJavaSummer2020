@@ -116,7 +116,7 @@ public class Project3Test extends InvokeMainTestCase {
     @Test
     public void checkStartBeforeEnd()
     {
-        MainMethodResult result = invokeMain("-textFile", "deep/file.txt" , "Deep", "123-123-1234", "123-123-1111", "1/8/2020", "12:34", "am", "1/7/2020", "12:45", "am");
+        MainMethodResult result = invokeMain("Test10",  "123-456-7890" , "452-234-2125" , "01/10/2020",  "10:00" , "pm", "01/10/2020",  "3:45" ,"pm" );
         assertThat(result.getTextWrittenToStandardOut(), containsString("phone call's end time is before its start time"));
     }
 
@@ -136,7 +136,7 @@ public class Project3Test extends InvokeMainTestCase {
 
     @Test
     public void invalidFilename(){
-        MainMethodResult result = invokeMain("-textFile", "file.txxt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "am","1/7/2020", "10:41", "pm");
+        MainMethodResult result = invokeMain("-textFile", "deep/file.txxt", "-pretty", "-", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "am","1/7/2020", "10:41", "pm");
         assertThat(result.getTextWrittenToStandardOut(), containsString("Invalid file name. Can't create file"));
     }
 
@@ -181,21 +181,21 @@ public class Project3Test extends InvokeMainTestCase {
     @Test
     public void isAmPmvalid()
     {
-        MainMethodResult result = invokeMain("-textFile",  "deep/file.txt",  "Project3" ,  "123-456-7890",  "135-789-0123",  "01/08/2020" , "12:00" ,  "AM", "01/08/2020", "11:45", "pm");
+        MainMethodResult result = invokeMain("-textFile",  "deep/file.txt",  "-pretty", "-", "Project3" ,  "123-456-7890",  "135-789-0123",  "01/08/2020" , "12:00" ,  "AM", "01/08/2020", "11:45", "pm");
         assertThat(result.getTextWrittenToStandardOut(), containsString("am/pm required"));
     }
 
 
     @Test
     public void malformatedDate(){
-        MainMethodResult result = invokeMain("-textFile",  "deep/file.txt",  "Project3" ,  "123-456-7890",  "135-789-0123",  "01/zz/2020" , "12:00" ,  "am", "01/08/2020", "11:45", "pm");
+        MainMethodResult result = invokeMain("-textFile",  "deep/file.txt", "-pretty" , "-", "Project3" ,  "123-456-7890",  "135-789-0123",  "01/zz/2020" , "12:00" ,  "am", "01/08/2020", "11:45", "pm");
         assertThat(result.getTextWrittenToStandardOut(), containsString("Invalid start date E.g 2/04/2020"));
     }
 
 
     @Test
     public void startTimeEndBeforeEndTime(){
-        MainMethodResult result = invokeMain("-textFile", "deep/deep.txt", "project3", "123-234-2222", "123-123-1234", "01/10/2020", "10:00", "pm", "01/10/2020", "3:45", "pm");
+        MainMethodResult result = invokeMain("project3", "123-234-2222", "123-123-1234", "01/10/2020", "10:00", "pm", "01/10/2020", "3:45", "pm");
         assertThat(result.getTextWrittenToStandardOut(), containsString("phone call's end time is before its start time"));
     }
 
