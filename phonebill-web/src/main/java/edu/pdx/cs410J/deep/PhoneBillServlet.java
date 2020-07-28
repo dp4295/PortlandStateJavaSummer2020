@@ -11,6 +11,8 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+import static edu.pdx.cs410J.deep.Project4.CUSTOMER_PARAMETER;
+
 /**
  * This servlet ultimately provides a REST API for working with an
  * <code>PhoneBill</code>.  However, in its current state, it is an example
@@ -35,12 +37,13 @@ public class PhoneBillServlet extends HttpServlet
     {
         response.setContentType( "text/plain" );
 
-        String word = getParameter( WORD_PARAMETER, request );
-        if (word != null) {
-            writeDefinition(word, response);
+        String customer = getParameter(CUSTOMER_PARAMETER, request );
 
-        } else {
-            writeAllDictionaryEntries(response);
+        if (customer == null) {
+
+            missingRequiredParameter(response, CUSTOMER_PARAMETER);
+        }else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, Messages.noPhoneBillForCustomer(customer));
         }
     }
 

@@ -87,4 +87,9 @@ public class Messages
         return map;
     }
 
+    public static String noPhoneBillForCustomer(String customername) {
+
+        return String.format("No phone bill for customer %s", customername);
+
+    }
 }

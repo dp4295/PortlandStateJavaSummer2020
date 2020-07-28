@@ -108,7 +108,7 @@ public class Project3Test extends InvokeMainTestCase {
 
     @Test
     public void ElevancommandlineArgument(){
-        MainMethodResult result = invokeMain("-textFile", "deep/file.txt" , "Deep", "123-123-1234", "123-123-1111", "1/7/2020", "12:34", "am", "1/7/2020", "12:45", "am");
+        MainMethodResult result = invokeMain("-textFile", "deep/deep.txt" , "Deep", "123-123-1234", "123-123-1111", "1/7/2020", "12:34", "am", "1/7/2020", "12:45", "am");
         assertThat(result.getTextWrittenToStandardOut(), containsString("Passed eleven arguments"));
     }
 
@@ -147,18 +147,19 @@ public class Project3Test extends InvokeMainTestCase {
 //        assertThat(result.getTextWrittenToStandardOut(), containsString("File is exist"));
 //    }
 //
-//    @Test
-//    public void fileCreated(){
-//        MainMethodResult result = invokeMain("-textFile", "deep/deep.txt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "1/7/2020", "10:41");
-//        assertThat(result.getTextWrittenToStandardOut(), containsString("File created"));
-//    }
+    @Test
+    public void fileCreated(){
+        MainMethodResult result = invokeMain("-textFile", "deep/deep.txt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "am", "1/7/2020", "10:41", "am");
+        assertThat(result.getTextWrittenToStandardOut(), containsString("File created"));
+    }
 
 
-    @Ignore
+
     @Test
     public void fileAlreadyexit(){
         MainMethodResult result = invokeMain("-textFile", "deep/file1.txt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "am", "1/7/2020", "10:41", "pm");
-        assertThat(result.getTextWrittenToStandardOut(), containsString("File already exist"));
+        assertThat(result.getTextWrittenToStandardOut(), containsString("File is exist"));
+    //    assertThat(result.getTextWrittenToStandardOut(), containsString("File doesn't exist"));
     }
 
     @Ignore

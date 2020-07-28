@@ -17,6 +17,7 @@ public class
 Project4 {
 
     public static final String MISSING_ARGS = "Missing command line arguments";
+    public static final String CUSTOMER_PARAMETER = "customer";
 
     public static void main(String... args) {
         String hostName = null;

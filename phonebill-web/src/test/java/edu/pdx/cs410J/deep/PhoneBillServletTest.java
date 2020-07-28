@@ -1,5 +1,6 @@
 package edu.pdx.cs410J.deep;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import static edu.pdx.cs410J.deep.Messages.missingRequiredParameter;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -22,22 +24,40 @@ import static org.mockito.Mockito.*;
 public class PhoneBillServletTest {
 
   @Test
-  public void initiallyServletContainsNoDictionaryEntries() throws ServletException, IOException {
+  public void requestWithNoCustomerReturnMissingParameter() throws ServletException, IOException {
+
     PhoneBillServlet servlet = new PhoneBillServlet();
 
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);
-    PrintWriter pw = mock(PrintWriter.class);
-
-    when(response.getWriter()).thenReturn(pw);
 
     servlet.doGet(request, response);
 
-    int expectedWords = 0;
-    verify(pw).println(Messages.formatWordCount(expectedWords));
-    verify(response).setStatus(HttpServletResponse.SC_OK);
+    verify(response).sendError(HttpServletResponse.SC_PRECONDITION_FAILED, Messages.missingRequiredParameter("customer"));
+
   }
 
+  @Test
+  public void requestCustomerWithNoPhoneBillReturnsNotFound() throws ServletException, IOException{
+
+    PhoneBillServlet servlet = new PhoneBillServlet();
+
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    String customername = "Deep";
+    when(request.getParameter("customer")).thenReturn(customername);
+
+
+    HttpServletResponse response = mock(HttpServletResponse.class);
+
+    servlet.doGet(request, response);
+
+    verify(response).sendError(HttpServletResponse.SC_NOT_FOUND, Messages.noPhoneBillForCustomer(customername));
+
+
+  }
+
+
+  @Ignore
   @Test
   public void addOneWordToDictionary() throws ServletException, IOException {
     PhoneBillServlet servlet = new PhoneBillServlet();
