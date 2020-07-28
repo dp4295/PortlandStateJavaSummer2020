@@ -12,7 +12,9 @@ import java.util.Map;
  * The main class that parses the command line and communicates with the
  * Phone Bill server using REST.
  */
-public class Project4 {
+public class
+
+Project4 {
 
     public static final String MISSING_ARGS = "Missing command line arguments";
 
