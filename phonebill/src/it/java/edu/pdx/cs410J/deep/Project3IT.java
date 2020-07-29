@@ -8,12 +8,12 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * Tests the functionality in the {@link Project3} main class.
+ * Tests the functionality in the {@link Project1} main class.
  */
 public class Project3IT extends InvokeMainTestCase {
 
     /**
-     * Invokes the main method of {@link Project3} with the given arguments.
+     * Invokes the main method of {@link Project1} with the given arguments.
      */
     private MainMethodResult invokeMain(String... args) {
         return invokeMain(Project3.class, args );
@@ -156,19 +156,13 @@ public class Project3IT extends InvokeMainTestCase {
 
 
 
-
-
-
-
-
-
-//  @Test
-//    public void testExtraCommandLineArguments()
-//  {
-//      MainMethodResult result = invokeMain(new String[] {"-print", "123-345-12324", "122-123-1234","7/7/2020 10:44", "7/8/2002 10:50", "extra"});
-//          assertThat(result.getExitCode(), equalTo(1));
-//          assertThat(result.getTextWrittenToStandardOut(), containsString("Too many arguments"));
-//  }
+  @Test
+    public void testExtraCommandLineArguments()
+  {
+      MainMethodResult result = invokeMain("textFile", "deep/deep.txt", "-pretty", "-", "Project3", "123-456-7890",  "452-234-2125",  "01/03/2020",  "11:00",  "am",  "01/03/2020",  "2:00",  "pm", "extra");
+          assertThat(result.getExitCode(), equalTo(1));
+          assertThat(result.getTextWrittenToStandardOut(), containsString("Extra arguments"));
+  }
 
 
 }

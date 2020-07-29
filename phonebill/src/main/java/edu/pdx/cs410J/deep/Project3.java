@@ -119,13 +119,7 @@ public class Project3 {
         // Add call record to bill object
         mybill.addPhoneCall(call);
 
-//          // Create a new phone call object
-//          PhoneCall call2 = new PhoneCall("555-555-5555", "666-666-6666", "6/7/2020", "12:00", "6/7/2020", "12:30");
-//
-//          // Add call to bill object
-//          mybill.addPhoneCall(call2);
 
-        // Invoke mybill's display
         mybill.display();
 
       } else {
@@ -154,10 +148,9 @@ public class Project3 {
 
         // Check if filename is contain .txt and the file is already exist or new. In this case
         // new file will be created and dump and the data into new file
-        if (validationobj.isvalidfilename(args[1]) && !(validationobj.isFileExist(filename))) {
+        if (validationobj.isvalidfilename(args[1]) && !(validationobj.isFileExist(path))) {
 
 
-//        System.out.println(textparser.parse());
           // Check validation for all command line arguments
           ArgumentValidationCheck validationcheck = new ArgumentValidationCheck();
 
@@ -168,14 +161,12 @@ public class Project3 {
           String start = args[5];
           String end = args[8];
 
-
           // return false, if the start date is before the end
 //          System.out.print((validationcheck.checkForEndTimeBeForStartTime(start,args[6], args[7],end, args[9], args[10])));
           if (!(validationcheck.checkForEndTimeBeForStartTime(start, args[6], args[7], end, args[9], args[10]))) {
             System.out.println("phone call's end time is before its start time");
             System.exit(1);
           }
-
 
           validationcheck.validInvalidPhoneNumber(args[3], args[4]);
 
@@ -188,31 +179,11 @@ public class Project3 {
           mybill.addPhoneCall(call);
 
           // Create a TextDumper object and pass the file name
-          TextDumper textdumper = new TextDumper(filename);
-
+          TextDumper textdumper = new TextDumper(path);
           // call the dump method of TextDumper object
           textdumper.dump(mybill);
 
 
-          //
-          //   System.out.println(textparser.parse());
-
-//          // ---> Second call <------
-//          // Create a new phone call object
-//          PhoneCall call2 = new PhoneCall("555-555-5555", "666-666-6666", "6/7/2020", "12:00", "6/7/2020", "12:30");
-//          // Add call to bill object
-//          mybill.addPhoneCall(call2);
-//          // ----> Added second call to call object <----
-
-          // Display mybill
-//          mybill.display();
-
-//          // before creating a file make sure to valid isPathCorrect and parse file name we already did it earlier
-//          mybill.CreateFile(filename);
-//
-//          // Here the first argument is path and second argument is PhoneBill object
-//          mybill.WriteToFile(filename, mybill);
-//
 
           // Create a newline in output
           for (int i = 0; i <= 3; ++i) {
@@ -221,31 +192,49 @@ public class Project3 {
           System.out.println("Read from file");
           System.out.println("_______________");
           // READING FROM FILE
-          TextParser textparser = new TextParser(filename, mybill, args[2]);
+          TextParser textparser = new TextParser(path, mybill, args[2]);
           System.out.println(textparser.parse());
 
         }
         // File contain .txt and file does not exist. When file does exist it return true
-        else if (validationobj.isvalidfilename(args[1]) && (validationobj.isFileExist(filename))) {
+        else if (validationobj.isvalidfilename(filename) && (validationobj.isFileExist(path))) {
+
+
+          // Check validation for all command line arguments
+          ArgumentValidationCheck validationcheck = new ArgumentValidationCheck();
+
+          // Check for valid date format
+          validationcheck.validInvalidDateAndTime(args[5], args[6], args[7], args[8], args[9], args[10]);
+
+          // Check for end time is before starts time
+          String start = args[5];
+          String end = args[8];
+
+          // return false, if the start date is before the end
+//          System.out.print((validationcheck.checkForEndTimeBeForStartTime(start,args[6], args[7],end, args[9], args[10])));
+          if (!(validationcheck.checkForEndTimeBeForStartTime(start, args[6], args[7], end, args[9], args[10]))) {
+            System.out.println("phone call's end time is before its start time");
+            System.exit(1);
+          }
+
+          validationcheck.validInvalidPhoneNumber(args[3], args[4]);
+
 
           PhoneCall call = new PhoneCall(args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10]);
 
           // Create a bill object
           PhoneBill mybill = new PhoneBill(args[2]);
 
+          mybill.addPhoneCall(call);
+
           // passing filename, PhoneBill object
-          TextParser parser = new TextParser(filename, mybill, args[2]);
+          TextParser parser = new TextParser(path, mybill, args[2]);
           System.out.println(parser.parse());
 
         }
 
       }
 
-
-//     // --> Reading from file <----
-
-
-//    // ----> End of reading from file <---
 
     } else if (args.length == 12) {
 
@@ -258,6 +247,7 @@ public class Project3 {
 
       String options1 = args[0];
       String file = filename;
+      String Pat = args[1];
       String option2 = args[2];
       String customername = args[3];
       String callernumber = args[4];
@@ -300,20 +290,6 @@ public class Project3 {
 
         PrettyPrinter pp = new PrettyPrinter(null);
         pp.dump(bill);
-
-
-//        // Create a newline in output
-//        for(int i=0; i<=3; ++i)
-//        {
-//          System.out.println();
-//        }
-//
-//        System.out.println("Read from file");
-//        System.out.println("_______________");
-//        // READING FROM FILE
-//        TextParser textparser = new TextParser(filename, bill, customername);
-//        System.out.println(textparser.parse());
-
 
         System.exit(0);
       } else {
@@ -379,7 +355,8 @@ public class Project3 {
 
         validationcheck.validInvalidDateAndTime(startdate, starttime, startampm, enddate, endtime, endampm);
         validationcheck.validInvalidPhoneNumber(callernumber, calleenumber);
-        validationcheck.isvalidfilename(filename);
+        validationcheck.isvalidfilename(filepath);
+
         if (!(validationcheck.checkForEndTimeBeForStartTime(startdate, starttime, startampm, enddate, endtime, endampm))) {
           System.out.println("phone call's end time is before its start time");
           System.exit(1);
@@ -391,7 +368,7 @@ public class Project3 {
         bill.addPhoneCall(call);
 
         // Create a TextDumper object and pass the file name
-        TextDumper textdumper = new TextDumper(filename);
+        TextDumper textdumper = new TextDumper(filepath);
 
         // call dump  of TextDumper object
         textdumper.dump(bill);
@@ -405,8 +382,11 @@ public class Project3 {
         System.out.println("Pretty print");
         System.out.println("_______________");
         // Print to pretty file in sorted order by start time and include duration
-        PrettyPrinter pp = new PrettyPrinter(null);
+
+
+        PrettyPrinter pp = new PrettyPrinter(prettypath);
         pp.dump(bill);
+
       }
       else{
 
@@ -434,15 +414,15 @@ public class Project3 {
           bill.addPhoneCall(call);
 
           // Create a TextDumper object and pass the file name
-          TextDumper textdumper = new TextDumper(filename);
+          TextDumper textdumper = new TextDumper(filepath);
 
           // call dump  of TextDumper object
           textdumper.dump(bill);
 
-
           // Print to pretty file in sorted order by start time and include duration
-          PrettyPrinter pp = new PrettyPrinter(prettyfilename);
+          PrettyPrinter pp = new PrettyPrinter(prettypath);
           pp.dump(bill);
+
       }
 
 

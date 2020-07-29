@@ -120,19 +120,9 @@ public class Project3Test extends InvokeMainTestCase {
         assertThat(result.getTextWrittenToStandardOut(), containsString("phone call's end time is before its start time"));
     }
 
-//    @Test
-//    public void tenCommnadlineArgument(){
-//        MainMethodResult result = invokeMain("-textFile","deep/deep.txt", "-print", "Deep", "123-123-123", "123-123-1234","1/7/2020", "1:23", "1/7/2020", "1:30", "Extra");
-//        assertThat(result.getExitCode(), equalTo(0));
-//      //  assertThat(result.getTextWrittenToStandardOut(), containsString(""));
-//    }
 
-//    @Test
-//    public void fileExistbutDifferentCustomerName() {
-//        MainMethodResult result = invokeMain("-textFile", "deep/deep.txt", "-print", "DIFFERENT", "123-123-123", "123-123-1234", "1/7/2020", "1:23", "1/7/2020", "1:30");
-//        assertThat(result.getTextWrittenToStandardOut(), containsString("Customer given in command line is different than the one found in the text file"));
-//
-//    }
+
+
 
     @Test
     public void invalidFilename(){
@@ -140,6 +130,12 @@ public class Project3Test extends InvokeMainTestCase {
         assertThat(result.getTextWrittenToStandardOut(), containsString("Invalid file name. Can't create file"));
     }
 
+
+    @Test
+    public void malFormatedEndtime(){
+        MainMethodResult result = invokeMain( "-textFile",  "deep/deep.txt",  "Project3", "123-456-7890", "153-234-2521", "01/07/2020", "7:00", "am", "01/ZZ/2020", "7:00", "pm");
+        assertThat(result.getTextWrittenToStandardOut(), containsString("Invalid end date E.g 2/04/2020"));
+    }
 
 //    @Test
 //    public void fileNotCreated(){
@@ -149,8 +145,8 @@ public class Project3Test extends InvokeMainTestCase {
 //
     @Test
     public void fileCreated(){
-        MainMethodResult result = invokeMain("-textFile", "deep/deep.txt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "am", "1/7/2020", "10:41", "am");
-        assertThat(result.getTextWrittenToStandardOut(), containsString("File created"));
+        MainMethodResult result = invokeMain("-textFile", "deep/file1.txt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "am", "1/7/2020", "10:41", "am");
+        assertThat(result.getTextWrittenToStandardOut(), containsString("File is exist"));
     }
 
 
@@ -159,7 +155,6 @@ public class Project3Test extends InvokeMainTestCase {
     public void fileAlreadyexit(){
         MainMethodResult result = invokeMain("-textFile", "deep/file1.txt", "Deep Patel", "123-123-1234", "123-123-1234", "1/7/2020", "10:39", "am", "1/7/2020", "10:41", "pm");
         assertThat(result.getTextWrittenToStandardOut(), containsString("File is exist"));
-    //    assertThat(result.getTextWrittenToStandardOut(), containsString("File doesn't exist"));
     }
 
     @Ignore
@@ -177,6 +172,14 @@ public class Project3Test extends InvokeMainTestCase {
         assertThat(result.getTextWrittenToStandardOut(), containsString("Invalid file name. Can't create file"));
     }
 
+
+//    @Test
+//    public void fileExistbutDifferentCustomerName() {
+//
+//        MainMethodResult result = invokeMain("-textFile", "deep/deep.txt", "Project3", "123-123-123", "123-123-1234", "1/7/2020", "1:23", "am", "1/7/2020", "1:30", "pm");
+//        MainMethodResult result1 = invokeMain("-textFile", "deep/deep.txt", "DIFFERENT", "123-123-123", "123-123-1234", "1/7/2020", "1:23", "am", "1/7/2020", "1:30", "pm");
+//        assertThat(result1.getTextWrittenToStandardOut(), containsString("Customer given in command line is different than the one found in the text file"));
+//    }
 
 
     @Test

@@ -72,7 +72,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>edu.pdx.cs410J.deep.Project1</mainClass>
+              <mainClass>edu.pdx.cs410J.deep.Project3</mainClass>
             </manifest>
           </archive>
         </configuration>

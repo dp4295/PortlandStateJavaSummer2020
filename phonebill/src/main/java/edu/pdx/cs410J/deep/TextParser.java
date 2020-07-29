@@ -26,7 +26,11 @@ public class TextParser implements PhoneBillParser {
     @Override
     public AbstractPhoneBill<?> parse() throws ParserException {
 
-        File file = new File(path);
+        String br[] = path.split("/");
+        String dir = br[0];
+        String filename = br[1];
+
+        File file = new File(dir + "/" + filename);
         String result;
         BufferedReader bufferedreader;
 
@@ -120,7 +124,6 @@ public class TextParser implements PhoneBillParser {
      * @param path  file path
      * @param phonebill  phonebill object
      */
-
     public TextParser(String path, PhoneBill phonebill, String userinput)
     {
         this.path = path;
@@ -128,15 +131,5 @@ public class TextParser implements PhoneBillParser {
         this.userinput = userinput;
     }
 
-    public TextParser(String filename, String userinput)
-    {
-        this.path = filename;
-        this.userinput = userinput;
-    }
 
-    public TextParser(String filename, PhoneBill phonebill)
-    {
-        this.path = filename;
-        this.phonebill = phonebill;
-    }
 }

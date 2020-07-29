@@ -18,9 +18,17 @@ public class PrettyPrinter implements PhoneBillDumper {
      */
     @Override
     public void dump(AbstractPhoneBill bill) throws IOException {
-        if(path != null){
+
+
+
+
+        if(!(path.equals("-"))){
+
+            String breaks[] = path.split("/");
+            String dir = breaks[0];
+            String filename = breaks[1];
             try{
-                FileWriter filewriter = new FileWriter(path);
+                FileWriter filewriter = new FileWriter(dir + "/" + filename);
                 BufferedWriter bufferedwriter = new BufferedWriter(filewriter);
 
                 bufferedwriter.write("");

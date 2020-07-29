@@ -167,7 +167,11 @@ public class ArgumentValidationCheck {
          */
         public boolean isFileExist(String filename){
 
-            File file = new File(filename);
+            String br[] = filename.split("/");
+            String dir = br[0];
+            String fname = br[1];
+
+            File file = new File(dir + "/" + fname);
 
             if(file.exists())
             {
