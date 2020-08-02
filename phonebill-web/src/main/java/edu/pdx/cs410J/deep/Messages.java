@@ -88,8 +88,38 @@ public class Messages
     }
 
     public static String noPhoneBillForCustomer(String customername) {
-
         return String.format("No phone bill for customer %s", customername);
+    }
 
+    public static String nullOrEmptyCustomerForPhoneBill(){
+        return String.format("null or empty customer passed");
+    }
+
+    public static String dateISnotValid(){
+        return String.format("Invalid date format");
+    }
+
+    public static String noPhoneCallFoundBetweenThisDate(){
+        return String.format("No Phone call found between these date");
+    }
+
+    public static String noCustomerFound(){
+        return String.format("No customer found");
+    }
+
+    public static  String invalidNumber(){
+        return String.format("Invalid number");
+    }
+
+    public static String invalidDate(){
+        return String.format("Invalid date format");
+    }
+
+    public static String NoArgument(){
+        return String.format("Missing command line arguments");
+    }
+
+    public static String ExtraArgument(){
+        return String.format("Extra argument found");
     }
 }

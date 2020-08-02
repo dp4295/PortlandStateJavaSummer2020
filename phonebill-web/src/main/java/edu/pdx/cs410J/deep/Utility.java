@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
  */
 public class Utility {
 
+     public static final String PASS   = "pass";
 
     /**
      * @param date
@@ -26,8 +27,11 @@ public class Utility {
 
         // Format: 03/26/2020
         dateformat = DateFormat.getDateInstance(DateFormat.SHORT, Locale.US);
-        return (dateformat.format(date));
+
+        DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.US);
+        return (formatter.format(date));
     }
+
 
     /**
      * @param datestring
@@ -46,7 +50,7 @@ public class Utility {
     /**
      * This method can be use to check if date enter by user as string is valid or not <code>checkInvalidDateAndTimeFormat</code>
      */
-    public boolean checkInvalidDateAndTimeFormat(String date, String time, String ampm){
+    public static String checkInvalidDateAndTimeFormat(String date, String time, String ampm){
 
         // Valid date format MM/dd/yyyy am/pm or M/dd/yyyy or MM/d/yyyy or M/d/yyyy
         if((Pattern.matches("[0-90-9]{2}/[0-90-9]{2}/[0-90-90-90-9]{4}", date) ) || (Pattern.matches("[0-9]{1}/[0-90-9]{2}/[0-90-90-90-9]{4}", date) ) ||
@@ -57,27 +61,19 @@ public class Utility {
 
                 if((Pattern.matches("am", ampm)) || (Pattern.matches("pm", ampm))) {
                          // If all the case are valid then it exit with 0
-                         System.exit(0);
-                         return true;
+
+                         return PASS;
                 }
                 else {
-                    System.out.println("Invalid Date Format");
-                    System.exit(1);
-                    return false;
+                    return "Invalid date format";
                 }
-
             }
             else {
-                System.out.println("Invalid Date Format");
-                System.exit(1);
-                return false;
+                return "Invalid date format";
             }
-
         }
         else {
-            System.out.println("Invalid Date Format");
-            System.exit(1);
-            return false;
+            return "Invalid date format";
         }
     }
 
@@ -86,18 +82,47 @@ public class Utility {
      * @param number
      * @return if number is correct format return true otherwise false
      */
-    public boolean checkInvalidPhoneNumber(String number) {
+    public static String checkInvalidPhoneNumber(String number) {
         if ((Pattern.matches("[0-90-90-9]{3}-[0-90-90-9]{3}-[0-90-90-90-9]{4}", number))) {
-            System.exit(0);
-            return true;
+            return PASS;
         } else {
-            System.out.println("Invalid number");
-            System.exit(1);
-            return false;
+            return "Invalid number";
         }
     }
 
 
+    /**
+     * This method is used to check for passed customer name is not null and empty
+     */
+      public static String checkCustomer(String value){
+          if(value == null || value.isEmpty()){
+              return "null or empty customer passed";
+          }
+          return PASS;
+      }
 
+    /**
+     * Check date is valid. The only valid date format are MM/dd/yyyy or M/dd/yyyy or MM/d/yyyy or M/d/yyyy and must all string must digit
+     */
+    public static String dateValid(String date)
+    {
+        if((Pattern.matches("[0-90-9]{2}/[0-90-9]{2}/[0-90-90-90-9]{4}", date) ) || (Pattern.matches("[0-9]{1}/[0-90-9]{2}/[0-90-90-90-9]{4}", date) ) ||
+                (Pattern.matches("[0-90-9]{2}/[0-9]{1}/[0-90-90-90-9]{4}", date) || (Pattern.matches("[0-9]{1}/[0-9]{1}/[0-90-90-90-9]{4}", date)))){
+            return PASS;
+        }else {
+            return "not valid date";
+        }
+    }
+
+    /**
+     * Check portnumber is valid
+     */
+    public static String portValid(String port)
+    {
+        if(Pattern.matches("^[0-9]*$", port)){
+            return PASS;
+        }
+        return "not valid port";
+    }
 
 }

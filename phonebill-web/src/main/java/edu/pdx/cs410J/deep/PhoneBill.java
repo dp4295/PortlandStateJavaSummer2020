@@ -30,18 +30,26 @@ public class PhoneBill extends AbstractPhoneBill {
         return customer;
     }
 
+
+
     @Override
     public void addPhoneCall(AbstractPhoneCall call) {
         callcollection.add((PhoneCall) call);
     }
 
     @Override
-    public Collection getPhoneCalls() {
+    public List<PhoneCall> getPhoneCalls() {
 
         Collections.sort(callcollection);
 
         return callcollection;
     }
+
+    public void setCallcollection(List<PhoneCall> phoneCalls){
+        this.callcollection = phoneCalls;
+    }
+
+
 
 
 

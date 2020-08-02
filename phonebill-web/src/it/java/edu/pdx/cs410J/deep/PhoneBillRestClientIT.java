@@ -2,6 +2,7 @@ package edu.pdx.cs410J.deep;
 
 import edu.pdx.cs410J.web.HttpRequestHelper;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
@@ -39,6 +40,7 @@ public class PhoneBillRestClientIT {
     assertThat(dictionary.size(), equalTo(0));
   }
 
+  @Ignore
   @Test
   public void test2DefineOneWord() throws IOException {
     PhoneBillRestClient client = newPhoneBillRestClient();
@@ -50,6 +52,7 @@ public class PhoneBillRestClientIT {
     assertThat(definition, equalTo(testDefinition));
   }
 
+  @Ignore
   @Test
   public void test4MissingRequiredParameterReturnsPreconditionFailed() throws IOException {
     PhoneBillRestClient client = newPhoneBillRestClient();

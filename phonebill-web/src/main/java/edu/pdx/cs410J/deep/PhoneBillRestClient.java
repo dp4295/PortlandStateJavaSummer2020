@@ -1,12 +1,19 @@
 package edu.pdx.cs410J.deep;
 
 import com.google.common.annotations.VisibleForTesting;
+import edu.pdx.cs410J.ParserException;
 import edu.pdx.cs410J.web.HttpRequestHelper;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
+import static edu.pdx.cs410J.deep.PhoneBillURLParameters.CALLER_NUMBER_PARAMETER;
 import static java.net.HttpURLConnection.HTTP_OK;
+import static edu.pdx.cs410J.deep.PhoneBillURLParameters.CUSTOMER_PARAMETER;
+import static edu.pdx.cs410J.deep.PhoneBillURLParameters.CALLEE_NUMBER_PARAMETER;
+import static edu.pdx.cs410J.deep.PhoneBillURLParameters.START_TIME_PARAMETER;
+import static edu.pdx.cs410J.deep.PhoneBillURLParameters.END_TIME_PARAMETER;
 
 /**
  * A helper class for accessing the rest client.  Note that this class provides
@@ -40,6 +47,15 @@ public class PhoneBillRestClient extends HttpRequestHelper
     }
 
     /**
+     * Return all Phonebill entries from the server
+     */
+    public Map<String, String> getAllPhoneBillEntries() throws IOException{
+        Map<String, String> map = new HashMap<>();
+        return map;
+    }
+
+
+    /**
      * Returns the definition for the given word
      */
     public String getDefinition(String word) throws IOException {
@@ -48,6 +64,47 @@ public class PhoneBillRestClient extends HttpRequestHelper
       String content = response.getContent();
       return Messages.parseDictionaryEntry(content).getValue();
     }
+
+    /**
+     * Get All the PhoneBill entries for the given customer
+     */
+    public PhoneBill getPhoneBills(String customer) throws IOException, ParserException {
+      //  Response response = get(this.url + "?customer=" + customer, Map.of());
+        Response response = get(this.url + "?customer=" + customer, Map.of(CUSTOMER_PARAMETER, customer));
+        throwExceptionIfNotOkayHttpStatus(response);
+
+        String content = response.getContent();
+
+        PhoneBill phoneBill;
+        TextParser parser = new TextParser(customer);
+        phoneBill = (PhoneBill) parser.parse();
+
+
+        for(PhoneCall phonecall : ((PhoneBill)phoneBill).getPhoneCalls()){
+            if(phoneBill.getCustomer().equals(customer)) {
+                content = phonecall.printPhoneCall();
+            }
+        }
+
+
+        //return content;
+        return phoneBill;
+    }
+
+
+    public void postPhoneCall(String[] args) throws IOException{
+//        Response response = post(this.url, Map.of("Customer", args[4], "Callername", args[5], "Calleename", args[6], "Start time", args[7] + " " + args[8]+ " "+ args[9], "End time", args[10] + " " + args[11]+ " "+ args[12]));
+        Response response = post(this.url, Map.of("Customer", args[4], "Callername", args[5], "Calleename", args[6], "Starttime", args[7] + " " + args[8]+ " "+ args[9], "Endtime", args[10] + " " + args[11]+ " "+ args[12]));
+        throwExceptionIfNotOkayHttpStatus(response);
+    }
+
+
+    public void addPhoneCall(String[] args) throws IOException{
+        Response response = postToMyURL(Map.of(CUSTOMER_PARAMETER, args[4], CALLER_NUMBER_PARAMETER, args[5], CALLEE_NUMBER_PARAMETER, args[6], START_TIME_PARAMETER , args[7] + " " + args[8]+ " "+ args[9], END_TIME_PARAMETER , args[10] + " " + args[11]+ " "+ args[12]));
+        throwExceptionIfNotOkayHttpStatus(response);
+    }
+
+
 
     public void addDictionaryEntry(String word, String definition) throws IOException {
       Response response = postToMyURL(Map.of("word", word, "definition", definition));
@@ -67,7 +124,7 @@ public class PhoneBillRestClient extends HttpRequestHelper
     private Response throwExceptionIfNotOkayHttpStatus(Response response) {
       int code = response.getCode();
       if (code != HTTP_OK) {
-        throw new PhoneBillRestException(code);
+     //   throw new PhoneBillRestException(code);
       }
       return response;
     }
