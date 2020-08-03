@@ -1,15 +1,13 @@
 package edu.pdx.cs410J.deep;
 
 import com.google.inject.internal.cglib.proxy.$Callback;
+import com.google.inject.internal.cglib.proxy.$ProxyRefDispatcher;
 import edu.pdx.cs410J.ParserException;
 import edu.pdx.cs410J.web.HttpRequestHelper;
 import groovy.transform.ToString;
 import picocli.CommandLine;
 
-import java.io.IOException;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
 import java.text.ParseException;
 import java.util.HashSet;
 import java.util.Map;
@@ -26,12 +24,13 @@ public class Project4 {
     public static final String GETPHONECALL = "GETPHONECALL";
     public static final String GETPHONECALLCRITERIA = "GETPHONECALLCRITERIA";
     public static final String POSTPHONECALL = "POSTPHONECALL";
-
+    public static final String POSTANDPRINTPHONECALL = "POSTANDPRINTPHONECALL";
+    public static final String SEARCHANDPRINTPHONECALL = "SEARCHANDPRINTPHONECALL";
 
     public static final String CUSTOMER_PARAMETER = "customer";
 
 
-    public static void main(String... args) {
+    public static void main(String... args) throws IOException, ParseException {
         String hostName = null;
         String portString = null;
         String word = null;
@@ -57,7 +56,7 @@ public class Project4 {
             error(Messages.NoArgument());
         }
 
-        if(args.length >13)
+        if(args.length >14)
         {
             error(Messages.ExtraArgument());
         }
@@ -68,9 +67,24 @@ public class Project4 {
             String str = args[i];
 
             if(str.equals("-README")) {
-               System.exit(0);
+
+                InputStream readme = Project4.class.getResourceAsStream("README.txt");
+              // BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
+                BufferedReader reader = new BufferedReader(new FileReader("deep/README.txt"));
+                String line = reader.readLine();
+
+                while (line != null) {
+                    System.out.println(line);
+                    line = reader.readLine();
+                }
+
+               System.exit(1);
             }else if (str.equals("-print")){
+
+
                 printme = true;
+                launch = true;
+
             }else if(str.equals("-search")){
                 launch = true;
                 searchme = true;
@@ -96,7 +110,7 @@ public class Project4 {
                 i++;
                 launch = true;
             }else {
-                if(index > 12) {
+                if(index > 14) {
                     error(Messages.ExtraArgument());
                     args[index] = str;
                     index++;
@@ -106,9 +120,9 @@ public class Project4 {
 
 
 
-        if(searchme && index !=3){
-            error("-search require customer name start date and end date");
-        }
+//        if(searchme && index !=8){
+//            error("-search require customer name start date and end date");
+//        }
 
         if(launch && (portString == null) || hostName == null ){
             error("Host name and Port require");
@@ -141,10 +155,33 @@ public class Project4 {
                 action = POSTPHONECALL;
             }
 
-
         }else if (args.length == 5 && launch)
         {
             action = GETPHONECALL;
+        }
+        else if(args.length == 14 && printme && launch)
+        {
+            action = POSTANDPRINTPHONECALL;
+        }
+        else if(args.length == 8 && launch)
+        {
+
+            message= Utility.checkInvalidDate(args[6]);
+            if(!(message.equals(PASS))){
+                error(Messages.invalidDate());
+            }
+            message = Utility.checkInvalidDate(args[7]);
+            if(!(message.equals(PASS))){
+                error(Messages.invalidDate());
+            }
+
+            message = Utility.checkForEndDateBeforeStartdate(args[6], args[7]);
+            if(!(message.equals(PASS))){
+                error(Messages.DateEndBeforeStart());
+            }
+
+
+            action = SEARCHANDPRINTPHONECALL;
         }
         /** End of data validation **/
 
@@ -184,32 +221,91 @@ public class Project4 {
 
                     case GETPHONECALL:
 
-                       // parserString  = RestClient.getPhoneBills(args[4]);
-                        phonebill  = RestClient.getPhoneBills(args[4]);
+                        //parserString  = RestClient.getPhoneBills(args[4]);
+                       phonebill  = RestClient.getPhoneBills(args[4]);
 //                        if(parserString == null || parserString.isEmpty()){
 //                            Messages.noCustomerFound();
 //                            System.exit(0);
 //                        }
-                        if(phonebill == null){
-                            Messages.noCustomerFound();
-                            System.exit(0);
-                        }
 
                         parser = new TextParser(args[4]);
                         phoneBill = (PhoneBill) parser.parse();
 
-                        System.out.println("PhoneCall found:");
+                        if(phoneBill == null){
+                            Messages.noCustomerFound();
+                            System.exit(0);
+                        }
+
+
+                        System.out.println("Finding phone call........");
+
+                        Boolean norecord = false;
                         for(PhoneCall phonecall : ((PhoneBill)phoneBill).getPhoneCalls()){
 
                             if(phoneBill.getCustomer().equals(args[4])) {
+
+                                System.out.println(phonecall.printPhoneCall());
+                                norecord = true;
+                            }
+                        }
+
+                        if(norecord == false)
+                        {
+                            System.out.println(Messages.noCustomerFound());
+                            System.exit(0);
+                        }
+
+                        System.exit(0);
+
+                    case POSTANDPRINTPHONECALL:
+
+                        phoneBill = new PhoneBill(args[5]);
+                        phoneCall = new PhoneCall(args[6], args[7], args[8] + " " + args[9]+  " "+ args[10] , args[11]+ " " + args[12] + " " + args[13]);
+
+                        phoneBill.addPhoneCall(phoneCall);
+
+                        stringWriter = new StringWriter();
+                        pw = new PrintWriter(stringWriter);
+                        textDumper = new TextDumper(pw);
+                        textDumper.dump(phoneBill);
+
+                        System.out.println("Phone call is added");
+                        System.out.println(phoneCall.prettyPrintCaller(phoneBill));
+
+
+                        System.exit(0);
+
+                    case SEARCHANDPRINTPHONECALL:
+
+
+                        phonebill  = RestClient.getPhoneBills(args[5]);
+//                        if(parserString == null || parserString.isEmpty()){
+//                            Messages.noCustomerFound();
+//                            System.exit(0);
+//                        }
+
+                        parser = new TextParser(args[5], args[6], args[7]);
+                        phoneBill = (PhoneBill) parser.parseForSearch();
+
+                        if(phoneBill == null){
+                            Messages.noCustomerFound();
+                            System.exit(0);
+                        }
+
+                        System.out.println("Searching call detail for " + args[5] + " where date between " + args[6] + " to " + args[7] + ".......");
+                        for(PhoneCall phonecall : ((PhoneBill)phoneBill).getPhoneCalls()){
+
+                            if(phoneBill.getCustomer().equals(args[5])) {
                                 System.out.println(phonecall.printPhoneCall());
 
                             }
                         }
 
-
                         System.exit(0);
+
                 }
+
+
             }catch (CommandLine.ParameterException | IOException | ParserException | ParseException e){
               error("Error while connecting server");
             }
@@ -330,4 +426,7 @@ public class Project4 {
 
         System.exit(1);
     }
+
+
+
 }

@@ -47,6 +47,20 @@ public class Utility {
         return date;
     }
 
+
+    /**
+     * @param dateString
+     * @throws ParseException
+     * @return  It return date in MM/dd/yyyy format
+     */
+    public static Date covertDateFromStringMM_dd_yyyy(String dateString) throws ParseException{
+        Date date = new Date();
+       // SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+       DateFormat dateformat = DateFormat.getDateInstance(DateFormat.SHORT, Locale.US);
+        date = dateformat.parse(dateString);
+        return date;
+    }
+
     /**
      * This method can be use to check if date enter by user as string is valid or not <code>checkInvalidDateAndTimeFormat</code>
      */
@@ -124,5 +138,76 @@ public class Utility {
         }
         return "not valid port";
     }
+
+    /**
+     * @param date
+     * @return if date is PASS return PASS
+     */
+    public static String checkInvalidDate(String date){
+
+        // Valid date format MM/dd/yyyy am/pm or M/dd/yyyy or MM/d/yyyy or M/d/yyyy
+        if((Pattern.matches("[0-90-9]{2}/[0-90-9]{2}/[0-90-90-90-9]{4}", date) ) || (Pattern.matches("[0-9]{1}/[0-90-9]{2}/[0-90-90-90-9]{4}", date) ) ||
+                (Pattern.matches("[0-90-9]{2}/[0-9]{1}/[0-90-90-90-9]{4}", date) || (Pattern.matches("[0-9]{1}/[0-9]{1}/[0-90-90-90-9]{4}", date) ) )) {
+
+            return PASS;
+        }
+        return "not valid date";
+    }
+
+
+
+    /**
+     * This methods check phone call’s end time is before its starts time
+     * @Return true false
+     */
+    public static String checkForEndTimeBeForStartTime(String starttime, String stime, String startampm, String endtime, String etime, String endampm) throws ParseException {
+
+
+        String std = starttime + " " + stime + " " + startampm;
+        String etd = endtime + " " + etime + " " + endampm;
+
+        SimpleDateFormat st = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
+        SimpleDateFormat et = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
+        Date start = st.parse(std);
+        Date end = et.parse(etd);
+
+//          System.out.print(start);
+//          System.out.print(end);
+//          System.out.print(start.compareTo(end));
+        if (start.compareTo(end) > 0) {
+            return "End date before start date";
+        } else if (start.compareTo(end) < 0) {
+            return PASS;
+        }
+        return "End date before start date";
+    }
+
+
+    /**
+     * This methods check phone call’s end time is before its starts time
+     * @Return true false
+     */
+    public static String checkForEndDateBeforeStartdate(String starttime, String endtime) throws ParseException {
+
+
+        String std = starttime ;
+        String etd = endtime;
+
+        SimpleDateFormat st = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat et = new SimpleDateFormat("MM/dd/yyyy");
+        Date start = st.parse(std);
+        Date end = et.parse(etd);
+
+        if (start.compareTo(end) > 0) {
+            return "End date before start date";
+        } else if (start.compareTo(end) <= 0) {
+            return PASS;
+        }
+        return "End date before start date";
+    }
+
+
+
+
 
 }

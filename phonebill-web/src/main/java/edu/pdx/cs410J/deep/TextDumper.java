@@ -81,16 +81,6 @@ public class TextDumper implements PhoneBillDumper {
             FileWriter writer = new FileWriter(DIR + "/" + FILENAME, true);
 
             BufferedWriter bw = new BufferedWriter(writer);
-            //PrintWriter pw = new PrintWriter(bw);
-            //  bw.write("");
-
-
-//            final BufferedReader br = new BufferedReader(new FileReader(DIR + "/"+ FILENAME));
-//            final StringBuilder sb = new StringBuilder();
-//            String nextLine = br.readLine();
-//
-//          //  while(nextLine != null)
-//            //{
               for(int i =0;  i< bill.getPhoneCalls().size(); i++)
               {
 
@@ -99,11 +89,9 @@ public class TextDumper implements PhoneBillDumper {
                     bw.newLine();
                 }
 
-
-
                 bw.close();
             }
-            //}
+
         }catch(IOException e){
             System.out.println("error while writing a file");
             System.exit(1);

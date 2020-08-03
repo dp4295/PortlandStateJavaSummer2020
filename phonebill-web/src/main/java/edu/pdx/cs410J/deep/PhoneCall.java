@@ -67,6 +67,11 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
         return "caller("+getCaller() + ") dial to callee("+ getCallee() +") at " + getStartTimeString() + " and ended at " + getEndTimeString();
     }
 
+
+    public String prettyPrintCaller(PhoneBill phoneBill){
+        return phoneBill.getCustomer() + " called from number " + getCaller() +  " to number " + getCallee() + " at " + getStartTimeString() + "  and ended call at " + getEndTimeString();
+    }
+
 //    /**
 //     * This method wtite destination file <code>getPhonecallForFile</code>
 //     */

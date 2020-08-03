@@ -1,5 +1,6 @@
 package edu.pdx.cs410J.deep;
 
+import edu.pdx.cs410J.ParserException;
 import edu.pdx.cs410J.web.HttpRequestHelper;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
@@ -13,6 +14,7 @@ import java.util.Map;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Integration test that tests the REST calls made by {@link PhoneBillRestClient}
@@ -40,25 +42,42 @@ public class PhoneBillRestClientIT {
     assertThat(dictionary.size(), equalTo(0));
   }
 
-  @Ignore
-  @Test
-  public void test2DefineOneWord() throws IOException {
-    PhoneBillRestClient client = newPhoneBillRestClient();
-    String testWord = "TEST WORD";
-    String testDefinition = "TEST DEFINITION";
-    client.addDictionaryEntry(testWord, testDefinition);
+//  @Test
+//  public void test1NonexistentPhoneBillThrowException() throws IOException{
+//    PhoneBillRestClient client = newPhoneBillRestClient();
+//
+//            try{
+//              try {
+//                client.getPhoneBills("Notexistcustomer");
+//              } catch (ParserException e) {
+//                e.printStackTrace();
+//              }
+//              fail("Should have thrown a PhoneBillRestExceptiom");
+//
+//            }catch (PhoneBillRestClient.PhoneBillRestException ex){
+//              assertThat(ex.getHttpStatusCode(), equalTo(HttpURLConnection.HTTP_PRECON_FAILED));
+//            }
+//  }
 
-    String definition = client.getDefinition(testWord);
-    assertThat(definition, equalTo(testDefinition));
-  }
-
-  @Ignore
-  @Test
-  public void test4MissingRequiredParameterReturnsPreconditionFailed() throws IOException {
-    PhoneBillRestClient client = newPhoneBillRestClient();
-    HttpRequestHelper.Response response = client.postToMyURL(Map.of());
-    assertThat(response.getContent(), containsString(Messages.missingRequiredParameter("word")));
-    assertThat(response.getCode(), equalTo(HttpURLConnection.HTTP_PRECON_FAILED));
-  }
+//  @Ignore
+//  @Test
+//  public void test2DefineOneWord() throws IOException {
+//    PhoneBillRestClient client = newPhoneBillRestClient();
+//    String testWord = "TEST WORD";
+//    String testDefinition = "TEST DEFINITION";
+//    client.addDictionaryEntry(testWord, testDefinition);
+//
+//    String definition = client.getDefinition(testWord);
+//    assertThat(definition, equalTo(testDefinition));
+//  }
+//
+//  @Ignore
+//  @Test
+//  public void test4MissingRequiredParameterReturnsPreconditionFailed() throws IOException {
+//    PhoneBillRestClient client = newPhoneBillRestClient();
+//    HttpRequestHelper.Response response = client.postToMyURL(Map.of());
+//    assertThat(response.getContent(), containsString(Messages.missingRequiredParameter("word")));
+//    assertThat(response.getCode(), equalTo(HttpURLConnection.HTTP_PRECON_FAILED));
+//  }
 
 }

@@ -122,4 +122,7 @@ public class Messages
     public static String ExtraArgument(){
         return String.format("Extra argument found");
     }
+
+    public static String DateEndBeforeStart(){return String.format("End date before start");};
+
 }
