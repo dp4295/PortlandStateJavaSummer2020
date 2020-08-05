@@ -5,7 +5,7 @@ import com.google.inject.internal.cglib.proxy.$ProxyRefDispatcher;
 import edu.pdx.cs410J.ParserException;
 import edu.pdx.cs410J.web.HttpRequestHelper;
 import groovy.transform.ToString;
-import picocli.CommandLine;
+//import picocli.CommandLine;
 
 import java.io.*;
 import java.text.ParseException;
@@ -306,7 +306,7 @@ public class Project4 {
                 }
 
 
-            }catch (CommandLine.ParameterException | IOException | ParserException | ParseException e){
+            }catch (IOException | ParserException | ParseException e){
               error("Error while connecting server");
             }
 
