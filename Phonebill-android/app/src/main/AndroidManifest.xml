@@ -65,20 +65,20 @@
         <activity
             android:name=".ReadMeActivity"
             android:parentActivityName=".MainActivity">
-            <!-- The meta-data tag is required if you support API level 15 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+<!--            &lt;!&ndash; The meta-data tag is required if you support API level 15 and lower &ndash;&gt;-->
+<!--            <meta-data-->
+<!--                android:name="android.support.PARENT_ACTIVITY"-->
+<!--                android:value=".MainActivity" />-->
         </activity>
 
 
         <activity
             android:name=".PhoneCallListActivity"
             android:parentActivityName=".MainActivity">
-            <!-- The meta-data tag is required if you support API level 15 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+<!--            &lt;!&ndash; The meta-data tag is required if you support API level 15 and lower &ndash;&gt;-->
+<!--            <meta-data-->
+<!--                android:name="android.support.PARENT_ACTIVITY"-->
+<!--                android:value=".MainActivity" />-->
         </activity>
 
 
@@ -86,10 +86,10 @@
             android:name=".SearchPhoneCallActivity"
             android:parentActivityName=".MainActivity">
 
-            <!-- The meta-data tag is required if you support API level 15 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+<!--            &lt;!&ndash; The meta-data tag is required if you support API level 15 and lower &ndash;&gt;-->
+<!--            <meta-data-->
+<!--                android:name="android.support.PARENT_ACTIVITY"-->
+<!--                android:value=".MainActivity" />-->
         </activity>
 
 
@@ -97,30 +97,30 @@
             android:name=".SearchCustomerPhoneCallsActivity"
             android:parentActivityName=".MainActivity">
 
-            <!-- The meta-data tag is required if you support API level 15 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+<!--            &lt;!&ndash; The meta-data tag is required if you support API level 15 and lower &ndash;&gt;-->
+<!--            <meta-data-->
+<!--                android:name="android.support.PARENT_ACTIVITY"-->
+<!--                android:value=".MainActivity" />-->
         </activity>
 
         <activity
             android:name=".PrittyPrintActivity"
             android:parentActivityName=".MainActivity">
 
-            <!-- The meta-data tag is required if you support API level 15 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+<!--            &lt;!&ndash; The meta-data tag is required if you support API level 15 and lower &ndash;&gt;-->
+<!--            <meta-data-->
+<!--                android:name="android.support.PARENT_ACTIVITY"-->
+<!--                android:value=".MainActivity" />-->
         </activity>
 
         <activity
             android:name=".AddPhoneCallActivity"
             android:parentActivityName=".MainActivity">
 
-            <!-- The meta-data tag is required if you support API level 15 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+<!--            &lt;!&ndash; The meta-data tag is required if you support API level 15 and lower &ndash;&gt;-->
+<!--            <meta-data-->
+<!--                android:name="android.support.PARENT_ACTIVITY"-->
+<!--                android:value=".MainActivity" />-->
         </activity>
 
         <activity

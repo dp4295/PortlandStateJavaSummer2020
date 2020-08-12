@@ -12,6 +12,7 @@
     <string name="readme">Hello Deep</string>
     <string name="add_phonecall">Enter a phoneCall</string>
     <string name="Search_customer_name">Search Customer</string>
+    <string name="Search_phonecalls">Search phonecall between two dates</string>
     <string name="customer_name">Customer Name</string>
     <string name="submit">SUBMIT</string>
 </resources>

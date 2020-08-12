@@ -44,18 +44,18 @@ public class AddPhoneCallActivity extends AppCompatActivity {
         EditText startdatetime = findViewById(R.id.startcalldatetime);
         EditText enddatetime = findViewById(R.id.endcalldatetime);
 
-//        String cname = customername.getText().toString();
-//        String can = callernumber.getText().toString();
-//        String cel = calleenumber.getText().toString();
-//        String sdt = startdatetime.getText().toString();
-//        String edt = enddatetime.getText().toString();
+        String cname = customername.getText().toString();
+        String can = callernumber.getText().toString();
+        String cel = calleenumber.getText().toString();
+        String sdt = startdatetime.getText().toString();
+        String edt = enddatetime.getText().toString();
 
 
-        String cname = "deep";
-        String can = "123-123-1111";
-        String cel = "111-333-3333";
-        String sdt = "8/8/2020 12:00 am";
-        String edt = "8/8/2020 12:30 am";
+//        String cname = "deep";
+//        String can = "123-123-1111";
+//        String cel = "111-333-3333";
+//        String sdt = "8/8/2020 12:00 am";
+//        String edt = "8/8/2020 12:30 am";
 
         // Validating input
         if(cname.equals("")){
