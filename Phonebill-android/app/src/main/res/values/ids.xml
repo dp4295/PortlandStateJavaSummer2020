@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <item name="text_view_id" type="id"></item>
+   <item name="textView" type="id"></item>
+   <item name="button" type="id"></item>
+   <item name="button2" type="id"></item>
+   <item name="resultsview" type="id"></item>
+   <item name="phonecall_info" type="id"></item>
+
+</resources>
