@@ -1,16 +1,12 @@
 package edu.pdx.cs410J.deep;
 
-import com.google.inject.internal.cglib.proxy.$Callback;
-import com.google.inject.internal.cglib.proxy.$ProxyRefDispatcher;
 import edu.pdx.cs410J.ParserException;
 import edu.pdx.cs410J.web.HttpRequestHelper;
-import groovy.transform.ToString;
 //import picocli.CommandLine;
 
 import java.io.*;
 import java.text.ParseException;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -26,6 +22,8 @@ public class Project4 {
     public static final String POSTPHONECALL = "POSTPHONECALL";
     public static final String POSTANDPRINTPHONECALL = "POSTANDPRINTPHONECALL";
     public static final String SEARCHANDPRINTPHONECALL = "SEARCHANDPRINTPHONECALL";
+    public static final String SEARCH = "SEARCH";
+    public static final String SEARCHBYCUSTOMERNAME= "SEARCHBYCUSTOMERNAME";
 
     public static final String CUSTOMER_PARAMETER = "customer";
 
@@ -69,8 +67,8 @@ public class Project4 {
             if(str.equals("-README")) {
 
                 InputStream readme = Project4.class.getResourceAsStream("README.txt");
-              // BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
-                BufferedReader reader = new BufferedReader(new FileReader("deep/README.txt"));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
+               // BufferedReader reader = new BufferedReader(new FileReader("deep/README.txt"));
                 String line = reader.readLine();
 
                 while (line != null) {
@@ -183,6 +181,9 @@ public class Project4 {
 
             action = SEARCHANDPRINTPHONECALL;
         }
+        else if(launch && searchme && args.length == 12){
+            action = SEARCH;
+        }
         /** End of data validation **/
 
 
@@ -204,7 +205,7 @@ public class Project4 {
                 switch (action) {
                     case POSTPHONECALL:
                         //RestClient.postPhoneCall(args);
-                       RestClient.addPhoneCall(args);
+                       //RestClient.addPhoneCall(args);
 
                         PhoneBill phonebill = new PhoneBill(args[4]);
                         PhoneCall phoneCall = new PhoneCall(args[5], args[6], args[7] + " " + args[8]+  " "+ args[9] , args[10]+ " " + args[11] + " " + args[12]);
@@ -222,7 +223,7 @@ public class Project4 {
                     case GETPHONECALL:
 
                         //parserString  = RestClient.getPhoneBills(args[4]);
-                       phonebill  = RestClient.getPhoneBills(args[4]);
+                     //  phonebill  = RestClient.getPhoneBills(args[4]);
 //                        if(parserString == null || parserString.isEmpty()){
 //                            Messages.noCustomerFound();
 //                            System.exit(0);
@@ -278,7 +279,7 @@ public class Project4 {
                     case SEARCHANDPRINTPHONECALL:
 
 
-                        phonebill  = RestClient.getPhoneBills(args[5]);
+//                        parserString = RestClient.getPhoneBills(args[5]);
 //                        if(parserString == null || parserString.isEmpty()){
 //                            Messages.noCustomerFound();
 //                            System.exit(0);
@@ -303,6 +304,36 @@ public class Project4 {
 
                         System.exit(0);
 
+                    case SEARCH:
+                     //   parserString  = RestClient.getPhoneBills(args[5]);
+       //                 phonebill  = RestClient.getPhoneBills(args[5]);
+
+
+//                        parserString = RestClient.getPhoneBills(args[5]);
+//                        if(parserString == null || parserString.isEmpty()){
+//                            Messages.noCustomerFound();
+//                            System.exit(0);
+//                        }
+
+                        parser = new TextParser(args[5], args[6], args[9]);
+                        phoneBill = (PhoneBill) parser.parseForSearch();
+
+                        if(phoneBill == null){
+                            Messages.noCustomerFound();
+                            System.exit(0);
+                        }
+
+                        System.out.println("Searching call detail for " + args[5] + " where date between " + args[6] + " to " + args[9] + ".......");
+                        for(PhoneCall phonecall : ((PhoneBill)phoneBill).getPhoneCalls()){
+
+                            if(phoneBill.getCustomer().equals(args[5])) {
+                                System.out.println(phonecall.printPhoneCall());
+
+                            }
+                        }
+
+                        System.exit(0);
+
                 }
 
 
@@ -314,69 +345,6 @@ public class Project4 {
 
         }
 
-
-
-//        for (String arg : args) {
-//            if (hostName == null) {
-//                hostName = arg;
-//
-//            } else if ( portString == null) {
-//                portString = arg;
-//
-//            } else if (word == null) {
-//                word = arg;
-//
-//            } else if (definition == null) {
-//                definition = arg;
-//
-//            } else {
-//                usage("Extraneous command line argument: " + arg);
-//            }
-//        }
-//
-//        if (hostName == null) {
-//            usage( MISSING_ARGS );
-//
-//        } else if ( portString == null) {
-//            usage( "Missing port" );
-//        }
-//
-//        int port;
-//        try {
-//            port = Integer.parseInt( portString );
-//
-//        } catch (NumberFormatException ex) {
-//            usage("Port \"" + portString + "\" must be an integer");
-//            return;
-//        }
-//
-//        PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
-//
-//        String message;
-//        try {
-//            if (word == null) {
-//                // Print all word/definition pairs
-//                Map<String, String> dictionary = client.getAllDictionaryEntries();
-//                StringWriter sw = new StringWriter();
-//                Messages.formatDictionaryEntries(new PrintWriter(sw, true), dictionary);
-//                message = sw.toString();
-//
-//            } else if (definition == null) {
-//                // Print all dictionary entries
-//                message = Messages.formatDictionaryEntry(word, client.getDefinition(word));
-//
-//            } else {
-//                // Post the word/definition pair
-//                client.addDictionaryEntry(word, definition);
-//                message = Messages.definedWordAs(word, definition);
-//            }
-//
-//        } catch ( IOException ex ) {
-//            error("While contacting server: " + ex);
-//            return;
-//        }
-//
-//        System.out.println(message);
 
         System.exit(0);
     }

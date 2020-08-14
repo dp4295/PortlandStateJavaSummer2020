@@ -125,4 +125,13 @@ public class Messages
 
     public static String DateEndBeforeStart(){return String.format("End date before start");};
 
+    /**
+     * Prints the error message and exits with status 1
+     * @param message error message to print
+     */
+    public static void printErrorAndExit(String message) {
+        System.out.println(message);
+        System.exit(1);
+        return;
+    }
 }

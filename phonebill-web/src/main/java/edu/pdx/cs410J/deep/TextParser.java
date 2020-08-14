@@ -123,11 +123,13 @@ public class TextParser implements PhoneBillParser {
                 Date parsed_ss = Utility.covertDateFromStringMM_dd_yyyy(br[3] + " 00:00 am");
                 Date parsed_es = Utility.covertDateFromStringMM_dd_yyyy(br[5] + " 00:00 am");
 
+
+                // User input
                 Date ss = Utility.covertDateFromStringMM_dd_yyyy(startsearch + " 00:00 am");
                 Date es = Utility.covertDateFromStringMM_dd_yyyy(endsearch+ " 00:00 am");
 
 
-                if(ss.compareTo(parsed_ss) >= 0 && ss.compareTo(parsed_es) <= 0 || es.compareTo(parsed_ss) >= 0 && es.compareTo(parsed_es) <=0)
+                if(ss.compareTo(parsed_ss) >= 0 || ss.compareTo(parsed_es) <= 0 || es.compareTo(parsed_ss) >= 0 || es.compareTo(parsed_es) <=0)
                 {
                     PhoneCall phoneCall = new PhoneCall(callernumber, calleenumber, start, end);
 

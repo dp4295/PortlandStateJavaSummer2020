@@ -34,39 +34,6 @@ public class TextDumper implements PhoneBillDumper {
      * @throws IOException
      */
     @Override
-//    public void dump(AbstractPhoneBill bill) throws IOException {
-//
-//        // Create a Directory
-//        File directory = new File(DIR);
-//        if(!directory.exists()){
-//            directory.mkdir();
-//        }
-//
-//        try{
-//            FileWriter writer = new FileWriter(DIR + "/" + FILENAME, true);
-//
-//            BufferedWriter bw = new BufferedWriter(writer);
-//        //   bw.write("");
-//
-//            for(int i =0;  i< bill.getPhoneCalls().size(); i++)
-//            {
-//                bw.append(bill.getCustomer()+","+ ((PhoneBill)bill).getPhoneCalls().get(i).getPhoneCallToWrite());
-//                if(i<bill.getPhoneCalls().size()-1) {
-//                    bw.newLine();
-//                }
-//
-//
-//                bw.close();
-//            }
-//        }catch(IOException e){
-//            System.out.println("error while writing a file");
-//            System.exit(1);
-//        }
-//
-//    }
-
-
-
     public void dump(AbstractPhoneBill bill) throws IOException {
 
         // Create a Directory

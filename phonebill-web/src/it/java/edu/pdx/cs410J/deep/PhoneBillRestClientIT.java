@@ -42,6 +42,10 @@ public class PhoneBillRestClientIT {
     assertThat(dictionary.size(), equalTo(0));
   }
 
+
+
+
+
 //  @Test
 //  public void test1NonexistentPhoneBillThrowException() throws IOException{
 //    PhoneBillRestClient client = newPhoneBillRestClient();

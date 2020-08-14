@@ -5,6 +5,7 @@ import edu.pdx.cs410J.ParserException;
 import edu.pdx.cs410J.web.HttpRequestHelper;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
@@ -68,33 +69,37 @@ public class PhoneBillRestClient extends HttpRequestHelper {
     /**
      * Get All the PhoneBill entries for the given customer
      */
-    public PhoneBill getPhoneBills(String customer) throws IOException, ParserException {
-        //  Response response = get(this.url + "?customer=" + customer, Map.of());
+    public String getPhoneBills(String customer) throws IOException, ParserException {
+        // Response response = get(this.url + "?customer=" + customer, Map.of());
         Response response = get(this.url + "?customer=" + customer, Map.of(CUSTOMER_PARAMETER, customer));
+      //  Response response = get(this.url , Map.of(CUSTOMER_PARAMETER, customer));
         throwExceptionIfNotOkayHttpStatus(response);
 
         String content = response.getContent();
 
-        PhoneBill phoneBill;
-        TextParser parser = new TextParser(customer);
-        phoneBill = (PhoneBill) parser.parse();
 
+       TextParser parser = new TextParser(customer);
+        PhoneBill phoneBill = (PhoneBill) parser.parse();
 
-        for (PhoneCall phonecall : ((PhoneBill) phoneBill).getPhoneCalls()) {
-            if (phoneBill.getCustomer().equals(customer)) {
-                content = phonecall.printPhoneCall();
+        if(phoneBill == null){
+            Messages.noCustomerFound();
+            System.exit(0);
+        }
+
+       // System.out.println("Searching call detail for " + customer + " where date between " + args[6] + " to " + args[7] + ".......");
+        for(PhoneCall phonecall : ((PhoneBill)phoneBill).getPhoneCalls()){
+
+            if(phoneBill.getCustomer().equals(customer)){
+               content =  phonecall.printPhoneCall();
+
             }
         }
 
-        //return content;
-        return phoneBill;
-
-
-//        TextParser parser = new TextParser(new StringReader(content));
-//        return (PhoneBill) parser.parse();
-
-
+        return content;
     }
+
+
+
 
 
     public void postPhoneCall(String[] args) throws IOException {
@@ -132,6 +137,15 @@ public class PhoneBillRestClient extends HttpRequestHelper {
         }
         return response;
     }
+
+    private static void error( String message )
+    {
+        PrintStream err = System.err;
+        err.println("** " + message);
+
+        System.exit(1);
+    }
+
 
     @VisibleForTesting
 //    class PhoneBillRestException extends RuntimeException {
