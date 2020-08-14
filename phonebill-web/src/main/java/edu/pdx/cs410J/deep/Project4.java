@@ -182,6 +182,20 @@ public class Project4 {
             action = SEARCHANDPRINTPHONECALL;
         }
         else if(launch && searchme && args.length == 12){
+
+            message= Utility.checkInvalidDate(args[6]);
+            if(!(message.equals(PASS))){
+                error(Messages.invalidDate());
+            }
+            message = Utility.checkInvalidDate(args[9]);
+            if(!(message.equals(PASS))){
+                error(Messages.invalidDate());
+            }
+
+            message = Utility.checkForEndDateBeforeStartdate(args[6], args[9]);
+            if(!(message.equals(PASS))){
+                error(Messages.DateEndBeforeStart());
+            }
             action = SEARCH;
         }
         /** End of data validation **/
