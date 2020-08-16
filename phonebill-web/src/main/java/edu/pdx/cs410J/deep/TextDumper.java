@@ -3,68 +3,71 @@ package edu.pdx.cs410J.deep;
 import edu.pdx.cs410J.AbstractPhoneBill;
 import edu.pdx.cs410J.PhoneBillDumper;
 import java.io.BufferedWriter;
-import java.io.FileWriter;
+
 import java.io.IOException;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
+import java.util.ArrayList;
 
-public class TextDumper implements PhoneBillDumper {
 
-   // private final SimpleDateFormat  dateformat = new SimpleDateFormat("MM/dd/yyyy HH:mm aa", Locale.ENGLISH);
-   private PrintWriter pw;
-    private final String DIR = "deep";
-    private final String  FILENAME = "deep.txt";
 
-    public TextDumper(PrintWriter pw) {
-        this.pw = pw;
+public class TextDumper implements PhoneBillDumper<AbstractPhoneBill> {
+
+
+    private String filename;
+    private PhoneBill phoneBill;
+
+
+    public TextDumper(String filename) {
+        this.filename = filename;
     }
 
 
-//    /**
-//     * Constructor <code>TextDumper</code>
-//     */
-//    TextDumper(PrintWriter pw){
-//        this.pw = pw;
-//    }
+
 
     /**
-     * @param bill
-     * @throws IOException
+     *
+     * @param bill PhoneBill object
+     * @throws IOException Throw input output exception
      */
     @Override
     public void dump(AbstractPhoneBill bill) throws IOException {
 
-        // Create a Directory
+        this.phoneBill = (PhoneBill) bill;
+        BufferedWriter bufferedWriter;
+        try {
 
+            OutputStream writetofile = new FileOutputStream(filename);
+            bufferedWriter = new BufferedWriter(new OutputStreamWriter(writetofile));
+            bufferedWriter.write(this.phoneBill.getCustomer());
+            bufferedWriter.newLine();
 
-        try{
-            File directory = new File(DIR+ "/" + FILENAME);
-            if(!directory.exists()){
-                directory.mkdir();
+            ArrayList<PhoneCall> phoneCalls = (ArrayList<PhoneCall>) this.phoneBill.getPhoneCalls();
+            for (PhoneCall phoneCall : phoneCalls) {
+
+                String callernumber = phoneCall.getCaller();
+                bufferedWriter.write(callernumber);
+                bufferedWriter.newLine();
+
+                String calleenumber = phoneCall.getCallee();
+                bufferedWriter.write(calleenumber);
+                bufferedWriter.newLine();
+
+                String start = phoneCall.getStartTimeString();
+                bufferedWriter.write(start);
+                bufferedWriter.newLine();
+
+                String end = phoneCall.getEndTimeString();
+                bufferedWriter.write(end);
+                bufferedWriter.newLine();
             }
-
-            FileWriter writer = new FileWriter(DIR + "/" + FILENAME, true);
-
-            BufferedWriter bw = new BufferedWriter(writer);
-              for(int i =0;  i< bill.getPhoneCalls().size(); i++)
-              {
-
-                bw.append(bill.getCustomer()+","+ ((PhoneBill)bill).getPhoneCalls().get(i).getPhoneCallToWrite());
-                if(i<bill.getPhoneCalls().size()) {
-                    bw.newLine();
-                }
-
-                bw.close();
-            }
-
-        }catch(IOException e){
-            System.out.println("error while writing a file");
-            System.exit(1);
+            bufferedWriter.close();
+        } catch (Exception err) {
+            throw new IOException("Can't input to file");
         }
-
     }
-
-
 }
+
+
+
+

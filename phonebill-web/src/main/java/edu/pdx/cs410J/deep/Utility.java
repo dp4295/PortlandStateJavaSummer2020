@@ -71,7 +71,8 @@ public class Utility {
                 (Pattern.matches("[0-90-9]{2}/[0-9]{1}/[0-90-90-90-9]{4}", date) || (Pattern.matches("[0-9]{1}/[0-9]{1}/[0-90-90-90-9]{4}", date) ) )) {
 
             // Valid time is from range 0 to 12 hour in 12:00 format
-            if(!(Pattern.matches("0[1-9]|1[012]", time))) {
+             // if((Pattern.matches("0[1-9]|1[012]", time))){    ^[0-9]*$
+                if((Pattern.matches("[0-9]*:[0-9]*", time) )){
 
                 if((Pattern.matches("am", ampm)) || (Pattern.matches("pm", ampm))) {
                          // If all the case are valid then it exit with 0

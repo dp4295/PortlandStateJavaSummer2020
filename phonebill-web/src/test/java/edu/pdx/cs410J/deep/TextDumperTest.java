@@ -1,11 +1,13 @@
 package edu.pdx.cs410J.deep;
 
 import com.google.inject.internal.cglib.proxy.$UndeclaredThrowableException;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.swing.*;
 import java.io.*;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -14,46 +16,55 @@ import static org.hamcrest.Matchers.containsString;
 public class TextDumperTest {
 
     @Test
-    public void TestDumper() throws IOException, ParseException {
-
-        PhoneBill bill = new PhoneBill("Deep");
-        String caller = "123-123-1221";
-        String callee = "222-123-1222";
-        String start = "07/2/2020 10:23 am";
-        String end = "07/2/2020 10:30 am";
-
-//        Date sd = null;
-//        try {
-//            sd = Utility.convertDateFromString();
-//
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-
-//        Date ed = null;
-//        try {
-//            ed = Utility.convertDateFromString("07/2/2020 10:30 am");
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-
-
-        PhoneCall phoneCall = new PhoneCall(caller, callee, start,end);
-        bill.addPhoneCall(phoneCall);
-
-
-        StringWriter stringWriter = new StringWriter();
-        PrintWriter pw = new PrintWriter((stringWriter));
-        TextDumper textDumper = new TextDumper(pw);
-       // textDumper.dump(bill);
+    public void TestDumper() {
+        String writer = "test";
+        TextDumper dumper =  new TextDumper(writer);
+        String customerName = "Customer";
+        ArrayList<PhoneCall> phoneCalls = new ArrayList<>();
+        PhoneCall number2;
         try {
-            textDumper.dump(bill);
-        } catch (IOException e) {
-            e.printStackTrace();
+            number2 = new PhoneCall("503-222-3333", "503-111-1111", "01/10/2020 12:30 am", "01/10/2020 12:45 am");
+            phoneCalls.add(number2);
+            PhoneBill bill = new PhoneBill(customerName,phoneCalls);
+            dumper.dump(bill);
+        }catch(Exception e){
+            System.err.println(e.getMessage());
         }
+    }
 
-        String result = checkCustomerInFile();
-        assertThat(result, containsString("Deep"));
+
+    @Test
+    public void TestDumperFailed() {
+        String writer = "test";
+        TextDumper dumper =  new TextDumper(writer);
+        String customerName = "Customer";
+        ArrayList<PhoneCall> phoneCalls = new ArrayList<>();
+        PhoneCall number2;
+        try {
+            number2 = new PhoneCall("503-222-3333", "503-111-1111", "01/10/2020 12:30 am", "01/10/2020 12:45 am");
+            phoneCalls.add(number2);
+            PhoneBill bill = new PhoneBill(customerName,phoneCalls);
+            dumper.dump(bill);
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void TestDumperFailed1() {
+        String writer = "test";
+        TextDumper dumper =  new TextDumper(writer);
+        String customerName = "Customer";
+        ArrayList<PhoneCall> phoneCalls = new ArrayList<>();
+        PhoneCall number2;
+        try {
+            number2 = new PhoneCall("503-222-3333", "503-111-1111", "01/10/2020 12:30 am", "01/10/2020 12:45 am");
+            phoneCalls.add(number2);
+            PhoneBill bill = new PhoneBill(customerName,phoneCalls);
+            dumper.dump(bill);
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+        }
     }
 
     protected static String checkCustomerInFile() throws IOException {

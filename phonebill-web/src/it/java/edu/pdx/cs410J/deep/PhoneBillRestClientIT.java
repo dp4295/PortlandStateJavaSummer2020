@@ -32,16 +32,46 @@ public class PhoneBillRestClientIT {
   @Test
   public void test0RemoveAllDictionaryEntries() throws IOException {
     PhoneBillRestClient client = newPhoneBillRestClient();
-    client.removeAllDictionaryEntries();
+   // client.removeAllDictionaryEntries();
+  }
+
+//  @Test
+//  public void test1EmptyServerContainsNoDictionaryEntries() throws IOException {
+//    PhoneBillRestClient client = newPhoneBillRestClient();
+//    Map<String, String> dictionary = client.getAllDictionaryEntries();
+//    assertThat(dictionary.size(), equalTo(0));
+//  }
+
+  @Test
+  public void TestAddPhoneCall() throws IOException{
+    PhoneBillRestClient client = newPhoneBillRestClient();
+    client.postPhoneCall("test", "123-122-1234", "122-111-1222", "8/8/2020 12:00 am", "8/8/2020 12:30 pam");
+  }
+
+//  @Test(expected=PhoneBillRestClient.PhoneBillRestException.class)
+//  public void TestAddNewPhoneCallFailed() throws IOException {
+//    PhoneBillRestClient client = newPhoneBillRestClient();
+//    client.postPhoneCall("clientTest", "541-11-1111", "541-454-4111", "2/20/2020 1:00 pm", "03/21/2020 1:10 am");
+//  }
+//
+//  @Test(expected=PhoneBillRestClient.PhoneBillRestException.class)
+//  public void TestAddNewPhoneCallFailed2() throws  IOException{
+//    PhoneBillRestClient client = newPhoneBillRestClient();
+//    client.postPhoneCall("clientTest", "541-111-1111", "541-454-4111", "2/20/020 1:00 pm", "03/21/2020 1:10 am");
+//  }
+
+  @Test
+  public void TestGetPhoneCall () throws IOException {
+    PhoneBillRestClient client = newPhoneBillRestClient();
+    client.getPhoneCalls("clientTest");
   }
 
   @Test
-  public void test1EmptyServerContainsNoDictionaryEntries() throws IOException {
+  public void TestSearch() throws IOException {
     PhoneBillRestClient client = newPhoneBillRestClient();
-    Map<String, String> dictionary = client.getAllDictionaryEntries();
-    assertThat(dictionary.size(), equalTo(0));
-  }
+    client.searcPhoneCalls("clientTest", "1/1/2020 1:00 pm", "2/1/2020 2:00 pm");
 
+  }
 
 
 

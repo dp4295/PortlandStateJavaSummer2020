@@ -39,13 +39,15 @@ public class PhoneBillRestClient extends HttpRequestHelper {
         this.url = String.format("http://%s:%d/%s/%s", hostName, port, WEB_APP, SERVLET);
     }
 
+
     /**
-     * Returns all dictionary entries from the server
-     */
+     //     * Returns all dictionary entries from the server
+     //     */
     public Map<String, String> getAllDictionaryEntries() throws IOException {
         Response response = get(this.url, Map.of());
         return Messages.parseDictionary(response.getContent());
     }
+
 
     /**
      * Return all Phonebill entries from the server
@@ -99,24 +101,43 @@ public class PhoneBillRestClient extends HttpRequestHelper {
     }
 
 
-
-
-
-    public void postPhoneCall(String[] args) throws IOException {
-//        Response response = post(this.url, Map.of("Customer", args[4], "Callername", args[5], "Calleename", args[6], "Start time", args[7] + " " + args[8]+ " "+ args[9], "End time", args[10] + " " + args[11]+ " "+ args[12]));
-        Response response = post(this.url, Map.of("Customer", args[4], "Callername", args[5], "Calleename", args[6], "Starttime", args[7] + " " + args[8] + " " + args[9], "Endtime", args[10] + " " + args[11] + " " + args[12]));
+    /**
+     *
+     * @param customer
+     * @return
+     * @throws IOException
+     */
+    public String getPhoneCalls(String customer) throws IOException{
+        Response response = get(this.url, Map.of("customer", customer));
         throwExceptionIfNotOkayHttpStatus(response);
+        return response.getContent();
     }
 
-
-    public void addPhoneCall(String[] args) throws IOException {
-        Response response = postToMyURL(Map.of(CUSTOMER_PARAMETER, args[4], CALLER_NUMBER_PARAMETER, args[5], CALLEE_NUMBER_PARAMETER, args[6], START_TIME_PARAMETER, args[7] + " " + args[8] + " " + args[9], END_TIME_PARAMETER, args[10] + " " + args[11] + " " + args[12]));
+    /**
+     *
+     * @param customer
+     * @param start
+     * @param end
+     * @return
+     * @throws IOException
+     */
+    public String searcPhoneCalls(String customer, String start, String end) throws IOException{
+        Response response = get(this.url, Map.of("customer", customer, "start",start , "end", end ));
         throwExceptionIfNotOkayHttpStatus(response);
+        return response.getContent();
     }
 
-
-    public void addDictionaryEntry(String word, String definition) throws IOException {
-        Response response = postToMyURL(Map.of("word", word, "definition", definition));
+    /**
+     *
+     * @param customer
+     * @param callernumber
+     * @param calleenumber
+     * @param start
+     * @param end
+     * @throws IOException
+     */
+    public void postPhoneCall(String customer, String callernumber, String calleenumber, String start, String end ) throws IOException{
+        Response response = postToMyURL(Map.of("customer", customer, "callerNumber", callernumber, "calleeNumber", calleenumber, "start", start, "end", end ));
         throwExceptionIfNotOkayHttpStatus(response);
     }
 
